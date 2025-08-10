@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تطبيق عملي: Customer Service AI Agent - شرح شامل</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      line-height: 1.7;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      color: white;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .card h2 {
+      color: #2c3e50;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      border-bottom: 3px solid #e74c3c;
+      padding-bottom: 10px;
+    }
+
+    .card h3 {
+      color: #34495e;
+      font-size: 1.4rem;
+      margin: 25px 0 15px 0;
+      position: relative;
+    }
+
+    .card h3:before {
+      content: "🔹";
+      margin-left: 10px;
+    }
+
+    .problem-statement {
+      background: linear-gradient(135deg, #e8f5e8, #d4edda);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border: 2px solid #28a745;
+    }
+
+    .problem-statement h3 {
+      color: #155724;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+
+    .goal-box {
+      background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 20px 0;
+      border-right: 5px solid #e17055;
+    }
+
+    .goal-box h4 {
+      color: #2d3436;
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+    }
+
+    .functions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      margin: 25px 0;
+    }
+
+    .function-card {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      padding: 25px;
+      border-radius: 15px;
+      border-left: 5px solid #e74c3c;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .function-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .function-card h4 {
+      color: #2c3e50;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .function-card .icon {
+      font-size: 1.8rem;
+      margin-left: 12px;
+    }
+
+    .detailed-explanation {
+      background: rgba(52, 152, 219, 0.1);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 15px 0;
+      border-right: 4px solid #3498db;
+    }
+
+    .detailed-explanation h4 {
+      color: #2c3e50;
+      margin-bottom: 12px;
+      font-size: 1.2rem;
+    }
+
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 25px 0;
+    }
+
+    .capability-card {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 25px;
+      border-radius: 12px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .capability-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .capability-card h4 {
+      margin-bottom: 12px;
+      font-size: 1.2rem;
+    }
+
+    .capability-card .capability-icon {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .pattern-highlight {
+      background: linear-gradient(135deg, #e8f5e8, #d4edda);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 15px 0;
+      border: 2px solid #28a745;
+    }
+
+    .pattern-highlight h4 {
+      color: #155724;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    .workflow-example {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 20px 0;
+    }
+
+    .workflow-step {
+      background: rgba(255, 255, 255, 0.9);
+      margin: 15px 0;
+      padding: 20px;
+      border-radius: 12px;
+      border-right: 5px solid #e74c3c;
+      position: relative;
+    }
+
+    .workflow-step h4 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    .step-number {
+      position: absolute;
+      right: -15px;
+      top: -10px;
+      background: #e74c3c;
+      color: white;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .highlight-box {
+      background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 20px 0;
+      border-right: 5px solid #e17055;
+    }
+
+    .highlight-box h4 {
+      color: #2d3436;
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+    }
+
+    .implementation-note {
+      background: rgba(155, 89, 182, 0.1);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 15px 0;
+      border: 2px solid rgba(155, 89, 182, 0.3);
+    }
+
+    .implementation-note h4 {
+      color: #2c3e50;
+      margin-bottom: 12px;
+      font-size: 1.2rem;
+    }
+
+    .real-world-note {
+      background: rgba(230, 126, 34, 0.1);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 15px 0;
+      border-right: 4px solid #e67e22;
+    }
+
+    .real-world-note h4 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    .question-types {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .question-type {
+      background: linear-gradient(135deg, #3498db, #2980b9);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .question-type h4 {
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+
+    ul {
+      padding-right: 25px;
+      margin: 15px 0;
+    }
+
+    li {
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    li:before {
+      content: "✓";
+      color: #27ae60;
+      font-weight: bold;
+      position: absolute;
+      right: -25px;
+      top: 2px;
+    }
+
+    .important-note {
+      background: rgba(231, 76, 60, 0.1);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+      border: 2px solid #e74c3c;
+    }
+
+    .important-note h4 {
+      color: #c0392b;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 2rem;
+      }
+
+      .card {
+        padding: 20px;
+      }
+
+      .functions-grid,
+      .capabilities-grid,
+      .question-types {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🤖 تطبيق عملي: Customer Service AI Agent</h1>
+      <p>تعلمنا أساسيات AI Agents والأنماط وحالات الاستخدام، دلوقتي وقت التطبيق العملي</p>
+    </div>
+
+    <div class="card">
+      <h2>🎯 مقدمة: من النظرية للتطبيق العملي</h2>
+      <p>بعد ما اتعلمنا أساسيات AI Agents والأنماط المختلفة وحالات الاستخدام، حان وقت التطبيق العملي! هنبني دلوقتي Agent
+        يستخدم Planning و Tool Use عشان يتعامل مع استفسارات العملاء بطريقة ذكية ومنظمة.</p>
+
+      <div class="highlight-box">
+        <h4>🌟 ليه التطبيق العملي مهم؟</h4>
+        <ul>
+          <li>ترجمة المفاهيم النظرية لحلول واقعية</li>
+          <li>فهم كيفية تطبيق الأنماط المختلفة مع بعض</li>
+          <li>التعامل مع التحديات الحقيقية في بناء الـ Agents</li>
+          <li>تعلم أفضل الممارسات في التصميم والتطوير</li>
+          <li>الاستعداد لبناء أنظمة أكثر تعقيداً</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📋 تعريف المشكلة: Problem Statement</h2>
+
+      <div class="problem-statement">
+        <h3>🎯 إيش المشكلة اللي هنحلها؟</h3>
+        <p>هنبني Customer Service AI Agent يقدر يتعامل مع استفسارات العملاء المعقدة بطريقة ذكية. الـ Agent ده مش مجرد
+          chatbot بسيط، ده نظام ذكي يقدر يخطط ويستخدم أدوات مختلفة عشان يجاوب على أسئلة العملاء بدقة.</p>
+      </div>
+
+      <div class="goal-box">
+        <h4>🎯 الهدف الأساسي للـ Agent</h4>
+        <p><strong>تقديم تحديثات الحالة للعملاء عن طلباتهم (Orders)</strong></p>
+        <p>ده يشمل معلومات زي حالة الطلب، تاريخ التسليم، سياسة الإرجاع، ومعلومات التواصل مع خدمة العملاء.</p>
+      </div>
+
+      <div class="detailed-explanation">
+        <h4>🔍 التحديات اللي هنواجهها:</h4>
+        <ul>
+          <li><strong>الأسئلة المعقدة:</strong> اللي محتاجة workflow متعدد الخطوات</li>
+          <li><strong>الأسئلة متعددة الأجزاء:</strong> اللي لازم تتقسم لمهام أصغر</li>
+          <li><strong>التكامل مع مصادر بيانات مختلفة:</strong> Functions و PDF documents</li>
+          <li><strong>التخطيط الذكي:</strong> ترتيب العمليات بالشكل الصحيح</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🔧 مصادر البيانات المتاحة للـ Agent</h2>
+      <p>عشان الـ Agent يقدر يقدم تحديثات الحالة، عنده access لمجموعة من المصادر:</p>
+
+      <div class="functions-grid">
+        <div class="function-card">
+          <h4><span class="icon">📦</span>Order Items Function</h4>
+          <div class="detailed-explanation">
+            <h4>📝 الوظيفة:</h4>
+            <p>ترجع قائمة بالعناصر اللي في الطلب لما تدخل لها Order ID</p>
+            <h4>🔍 الاستخدام:</h4>
+            <ul>
+              <li>معرفة إيش العميل طلبه بالضبط</li>
+              <li>عرض تفاصيل كل منتج في الطلب</li>
+              <li>التحقق من صحة الطلب</li>
+            </ul>
+            <h4>💡 مثال السؤال:</h4>
+            <p>"إيش اللي طلبته في الأوردر رقم 12345؟"</p>
+          </div>
+        </div>
+
+        <div class="function-card">
+          <h4><span class="icon">🚚</span>Delivery Date Function</h4>
+          <div class="detailed-explanation">
+            <h4>📝 الوظيفة:</h4>
+            <p>توفر تاريخ التسليم للطلب لما تدخل لها Order ID</p>
+            <h4>🔍 الاستخدام:</h4>
+            <ul>
+              <li>إعطاء العميل موعد التسليم المتوقع</li>
+              <li>تتبع حالة الشحن</li>
+              <li>التحقق من التأخير في التسليم</li>
+            </ul>
+            <h4>💡 مثال السؤال:</h4>
+            <p>"إمتى هيوصلني الأوردر بتاعي؟"</p>
+          </div>
+        </div>
+
+        <div class="function-card">
+          <h4><span class="icon">↩️</span>Return Policy Function</h4>
+          <div class="detailed-explanation">
+            <h4>📝 الوظيفة:</h4>
+            <p>ترجع سياسة الإرجاع لمنتج معين (أقصى عدد أيام للإرجاع)</p>
+            <h4>🔍 الاستخدام:</h4>
+            <ul>
+              <li>توضيح قوانين الإرجاع للعميل</li>
+              <li>حساب المدة المتبقية للإرجاع</li>
+              <li>شرح شروط الإرجاع</li>
+            </ul>
+            <h4>💡 مثال السؤال:</h4>
+            <p>"ممكن أرجع المنتج ده لو مش عاجبني؟"</p>
+          </div>
+        </div>
+
+        <div class="function-card">
+          <h4><span class="icon">📄</span>PDF Document - Contact Info</h4>
+          <div class="detailed-explanation">
+            <h4>📝 المحتوى:</h4>
+            <p>وثيقة PDF تحتوي على معلومات التواصل مع خدمة العملاء</p>
+            <h4>🔍 الاستخدام:</h4>
+            <ul>
+              <li>توفير أرقام التليفون للدعم</li>
+              <li>عناوين البريد الإلكتروني</li>
+              <li>مواعيد العمل لخدمة العملاء</li>
+              <li>القنوات المختلفة للتواصل</li>
+            </ul>
+            <h4>💡 مثال السؤال:</h4>
+            <p>"عايز أتكلم مع خدمة العملاء، إزاي أوصلكم؟"</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="real-world-note">
+        <h4>🌍 ملاحظة من الواقع</h4>
+        <p>الـ Agent الحقيقي في الشركات الكبيرة ممكن يكون عنده functions أكتر بكتير. إحنا بنستخدم مجموعة صغيرة من
+          الميزات لغرض التوضيح والتعلم.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🎯 قدرات الـ Agent المطلوبة</h2>
+      <p>الـ Agent المطلوب بناؤه لازم يكون قادر على التعامل مع تحديات مختلفة:</p>
+
+      <div class="capabilities-grid">
+        <div class="capability-card">
+          <span class="capability-icon">🔀</span>
+          <h4>Complex Questions Handling</h4>
+          <p>التعامل مع الأسئلة المعقدة اللي محتاجة workflow متعدد الخطوات للتنفيذ</p>
+        </div>
+
+        <div class="capability-card">
+          <span class="capability-icon">🧩</span>
+          <h4>Multi-part Questions</h4>
+          <p>التعامل مع الأسئلة متعددة الأجزاء اللي لازم تتقسم لمهام أصغر</p>
+        </div>
+
+        <div class="capability-card">
+          <span class="capability-icon">🔧</span>
+          <h4>Function Calling / Tool Use</h4>
+          <p>استخدام Tool Use Pattern للتفاعل مع الـ functions والمصادر المختلفة</p>
+        </div>
+
+        <div class="capability-card">
+          <span class="capability-icon">📋</span>
+          <h4>Planning Pattern</h4>
+          <p>استخدام Planning Pattern لترتيب وتنظيم خطوات حل المشكلة</p>
+        </div>
+      </div>
+
+      <h3>📊 أنواع الأسئلة اللي الـ Agent لازم يقدر يتعامل معها</h3>
+
+      <div class="question-types">
+        <div class="question-type">
+          <h4>🔍 أسئلة بسيطة</h4>
+          <p>"إيش تاريخ تسليم أوردر 123؟"</p>
+        </div>
+        <div class="question-type">
+          <h4>🔀 أسئلة معقدة</h4>
+          <p>"عايز أعرف كل حاجة عن أوردر 123"</p>
+        </div>
+        <div class="question-type">
+          <h4>🧩 أسئلة متعددة الأجزاء</h4>
+          <p>"إيش في أوردر 123 وإمتى هيوصل وممكن أرجعه؟"</p>
+        </div>
+        <div class="question-type">
+          <h4>❓ أسئلة غير مباشرة</h4>
+          <p>"مش راضي عن الأوردر بتاعي، عايز أعمل إيه؟"</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🎨 الأنماط المستخدمة في التطبيق</h2>
+
+      <div class="pattern-highlight">
+        <h4>📋 Planning Pattern</h4>
+        <div class="detailed-explanation">
+          <h4>🎯 الاستخدام في المشروع:</h4>
+          <ul>
+            <li><strong>تحليل السؤال:</strong> فهم إيش العميل عايز يعرفه</li>
+            <li><strong>تقسيم المهام:</strong> تجزئة الأسئلة المعقدة لخطوات</li>
+            <li><strong>ترتيب العمليات:</strong> تحديد أي function يتستدعى الأول</li>
+            <li><strong>تجميع النتائج:</strong> دمج المعلومات من مصادر مختلفة</li>
+          </ul>
+
+          <div class="workflow-example">
+            <h4>مثال: "عايز أعرف كل حاجة عن أوردر 123"</h4>
+            <div class="workflow-step">
+              <div class="step-number">1</div>
+              <h4>تحليل السؤال</h4>
+              <p>فهم إن العميل عايز معلومات شاملة عن الطلب</p>
+            </div>
+            <div class="workflow-step">
+              <div class="step-number">2</div>
+              <h4>تخطيط المهام</h4>
+              <p>تحديد إن محتاج: العناصر + تاريخ التسليم + سياسة الإرجاع</p>
+            </div>
+            <div class="workflow-step">
+              <div class="step-number">3</div>
+              <h4>ترتيب التنفيذ</h4>
+              <p>البدء بـ Order Items Function، ثم Delivery Date، ثم Return Policy</p>
+            </div>
+            <div class="workflow-step">
+              <div class="step-number">4</div>
+              <h4>تجميع وعرض النتائج</h4>
+              <p>دمج كل المعلومات في إجابة شاملة ومنظمة</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pattern-highlight">
+        <h4>🔧 Tool Use Pattern</h4>
+        <div class="detailed-explanation">
+          <h4>🎯 الاستخدام في المشروع:</h4>
+          <ul>
+            <li><strong>استدعاء Functions:</strong> تشغيل الوظائف المناسبة حسب السؤال</li>
+            <li><strong>معالجة المعاملات:</strong> تمرير Order ID أو Item Name بشكل صحيح</li>
+            <li><strong>قراءة PDF:</strong> استخراج معلومات التواصل من الوثيقة</li>
+            <li><strong>معالجة الأخطاء:</strong> التعامل مع الحالات الاستثنائية</li>
+          </ul>
+
+          <div class="implementation-note">
+            <h4>💡 مثال عملي:</h4>
+            <p><strong>السؤال:</strong> "إمتى هيوصلني أوردر 456؟"</p>
+            <p><strong>الخطوات:</strong></p>
+            <ul>
+              <li>تحديد الـ Order ID (456)</li>
+              <li>استدعاء Delivery Date Function</li>
+              <li>تمرير Order ID كمعامل</li>
+              <li>استقبال النتيجة وتنسيقها للعميل</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🌟 سيناريوهات الاستخدام المتوقعة</h2>
+
+      <div class="detailed-explanation">
+        <h4>🎯 أمثلة واقعية للأسئلة والإجابات:</h4>
+
+        <div class="workflow-example">
+          <h4>سيناريو 1: السؤال البسيط</h4>
+          <div class="workflow-step">
+            <div class="step-number">Q</div>
+            <h4>سؤال العميل</h4>
+            <p>"إيش موجود في أوردر 789؟"</p>
+          </div>
+          <div class="workflow-step">
+            <div class="step-number">A</div>
+            <h4>استراتيجية الحل</h4>
+            <ul>
+              <li>استخدام Order Items Function مع Order ID 789</li>
+              <li>عرض قائمة المنتجات بطريقة منظمة</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="workflow-example">
+          <h4>سيناريو 2: السؤال المعقد متعدد الأجزاء</h4>
+          <div class="workflow-step">
+            <div class="step-number">Q</div>
+            <h4>سؤال العميل</h4>
+            <p>"عايز أعرف إيش طلبته في أوردر 456، إمتى هيوصل، ولو مش عاجبني ممكن أرجعه إمتى؟"</p>
+          </div>
+          <div class="workflow-step">
+            <div class="step-number">A</div>
+            <h4>استراتيجية الحل</h4>
+            <ul>
+              <li>Planning: تقسيم السؤال ل3 أجزاء</li>
+              <li>Tool Use 1: Order Items Function للمنتجات</li>
+              <li>Tool Use 2: Delivery Date Function للتوقيت</li>
+              <li>Tool Use 3: Return Policy Function لكل منتج</li>
+              <li>تجميع النتائج في إجابة شاملة</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="workflow-example">
+          <h4>سيناريو 3: طلب معلومات التواصل</h4>
+          <div class="workflow-step">
+            <div class="step-number">Q</div>
+            <h4>سؤال العميل</h4>
+            <p>"عندي مشكلة في الأوردر، عايز أتكلم مع حد من خدمة العملاء"</p>
+          </div>
+          <div class="workflow-step">
+            <div class="step-number">A</div>
+            <h4>استراتيجية الحل</h4>
+            <ul>
+              <li>قراءة وثيقة PDF للحصول على معلومات التواصل</li>
+              <li>عرض خيارات التواصل المختلفة</li>
+              <li>تقديم مواعيد العمل والقنوات المتاحة</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>💡 التحديات المتوقعة والحلول</h2>
+
+      <div class="highlight-box">
+        <h4>🎯 التحديات الرئيسية:</h4>
+
+        <div class="detailed-explanation">
+          <h4>1. 🔍 فهم نية العميل (Intent Recognition)</h4>
+          <ul>
+            <li>العميل ممكن يسأل بطرق مختلفة عن نفس المعلومة</li>
+            <li>الحاجة لفهم السياق والمعنى الضمني</li>
+            <li><strong>الحل:</strong> استخدام NLP متقدم وتدريب الـ LLM على أمثلة متنوعة</li>
+          </ul>
+        </div>
+
+        <div class="detailed-explanation">
+          <h4>2. ⚡ معالجة الأخطاء</h4>
+          <ul>
+            <li>Order ID غير موجود</li>
+            <li>فشل في الاتصال بالـ functions</li>
+            <li><strong>الحل:</strong> نظام error handling قوي مع رسائل واضحة للعميل</li>
+          </ul>
+        </div>
+
+        <div class="detailed-explanation">
+          <h4>3. 🔗 التنسيق بين عدة functions</h4>
+          <ul>
+            <li>ترتيب استدعاء الـ functions</li>
+            <li>دمج النتائج من مصادر مختلفة</li>
+            <li><strong>الحل:</strong> استخدام Planning Pattern بكفاءة</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🚀 الخطوات التالية في التطوير</h2>
+
+      <div class="implementation-note">
+        <h4>🎯 ما هنعمله في الفصول الجاية:</h4>
+        <ul>
+          <li><strong>التطبيق العملي:</strong> بناء الـ Agent خطوة بخطوة</li>
+          <li><strong>كتابة الكود:</strong> تطبيق Planning و Tool Use patterns</li>
+          <li><strong>التجربة والاختبار:</strong> تجربة سيناريوهات مختلفة</li>
+          <li><strong>التحسين والتطوير:</strong> تطوير الأداء وإضافة ميزات جديدة</li>
+        </ul>
+      </div>
+
+      <div class="real-world-note">
+        <h4>🌍 نصائح للتطوير في البيئة الحقيقية</h4>
+        <ul>
+          <li>ابدأ بـ functions بسيطة وزود التعقيد تدريجياً</li>
+          <li>اختبر كل function على حدة قبل الدمج</li>
+          <li>وثق كل function وتوقعاتها بوضوح</li>
+          <li>حط نظام مراقبة لأداء الـ Agent</li>
+          <li>اجمع feedback من العملاء وحسن النظام باستمرار</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="important-note">
+        <h4>📝 ملخص الفصل</h4>
+        <p>في الفصل ده عرفنا Problem Statement للـ Customer Service AI Agent اللي هنبنيه. الـ Agent ده هيستخدم Planning
+          Pattern للتخطيط وتنظيم المهام، و Tool Use Pattern للتفاعل مع الـ functions والمصادر المختلفة. في الفصول الجاية
+          هنبدأ التطبيق العملي ونشوف إزاي نبني النظام ده من الصفر.</p>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

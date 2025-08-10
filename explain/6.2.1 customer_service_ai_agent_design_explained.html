@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تصميم Customer Service AI Agent - شرح مفصل</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      line-height: 1.7;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      color: white;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .card h2 {
+      color: #2c3e50;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      border-bottom: 3px solid #e74c3c;
+      padding-bottom: 10px;
+    }
+
+    .card h3 {
+      color: #34495e;
+      font-size: 1.4rem;
+      margin: 25px 0 15px 0;
+      position: relative;
+    }
+
+    .card h3:before {
+      content: "🔹";
+      margin-left: 10px;
+    }
+
+    .design-overview {
+      background: linear-gradient(135deg, #e8f5e8, #d4edda);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border: 2px solid #28a745;
+    }
+
+    .design-overview h3 {
+      color: #155724;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+
+    .architecture-diagram {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      padding: 30px;
+      border-radius: 15px;
+      margin: 25px 0;
+      text-align: center;
+    }
+
+    .central-agent {
+      background: #e74c3c;
+      color: white;
+      padding: 20px;
+      border-radius: 15px;
+      width: 200px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 30px;
+      font-weight: bold;
+      font-size: 1.2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 25px 0;
+    }
+
+    .tool-card {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      padding: 25px;
+      border-radius: 15px;
+      border-left: 5px solid #3498db;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .tool-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .tool-card h4 {
+      color: #2c3e50;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .tool-card .icon {
+      font-size: 1.8rem;
+      margin-left: 12px;
+    }
+
+    .function-details {
+      background: rgba(52, 152, 219, 0.1);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 15px 0;
+      border-right: 4px solid #3498db;
+    }
+
+    .function-details h5 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+
+    .implementation-steps {
+      background: rgba(155, 89, 182, 0.1);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 15px 0;
+      border: 2px solid rgba(155, 89, 182, 0.3);
+    }
+
+    .implementation-steps h4 {
+      color: #2c3e50;
+      margin-bottom: 12px;
+      font-size: 1.2rem;
+    }
+
+    .workflow-step {
+      background: rgba(255, 255, 255, 0.9);
+      margin: 15px 0;
+      padding: 20px;
+      border-radius: 12px;
+      border-right: 5px solid #9b59b6;
+      position: relative;
+    }
+
+    .workflow-step h4 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    .step-number {
+      position: absolute;
+      right: -15px;
+      top: -10px;
+      background: #9b59b6;
+      color: white;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .pdf-processing {
+      background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 20px 0;
+      border-right: 5px solid #e17055;
+    }
+
+    .pdf-processing h4 {
+      color: #2d3436;
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+    }
+
+    .highlight-box {
+      background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 20px 0;
+      border-right: 5px solid #e17055;
+    }
+
+    .highlight-box h4 {
+      color: #2d3436;
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+    }
+
+    .detailed-explanation {
+      background: rgba(52, 152, 219, 0.1);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 15px 0;
+      border-right: 4px solid #3498db;
+    }
+
+    .detailed-explanation h4 {
+      color: #2c3e50;
+      margin-bottom: 12px;
+      font-size: 1.2rem;
+    }
+
+    .tool-creation-process {
+      background: rgba(230, 126, 34, 0.1);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 15px 0;
+      border-right: 4px solid #e67e22;
+    }
+
+    .tool-creation-process h4 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    .agent-capabilities {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .capability-item {
+      background: linear-gradient(135deg, #3498db, #2980b9);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .capability-item h4 {
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+
+    .next-steps {
+      background: rgba(39, 174, 96, 0.1);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 15px 0;
+      border: 2px solid #27ae60;
+    }
+
+    .next-steps h4 {
+      color: #155724;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    ul {
+      padding-right: 25px;
+      margin: 15px 0;
+    }
+
+    li {
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    li:before {
+      content: "✓";
+      color: #27ae60;
+      font-weight: bold;
+      position: absolute;
+      right: -25px;
+      top: 2px;
+    }
+
+    .process-flow {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .process-step {
+      background: #3498db;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 10px;
+      margin: 5px;
+      font-weight: bold;
+      position: relative;
+      flex: 1;
+      min-width: 120px;
+      text-align: center;
+    }
+
+    .process-step:not(:last-child):after {
+      content: "➤";
+      position: absolute;
+      right: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #3498db;
+      font-size: 1.5rem;
+      background: white;
+      padding: 0 5px;
+      border-radius: 50%;
+    }
+
+    .important-note {
+      background: rgba(231, 76, 60, 0.1);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+      border: 2px solid #e74c3c;
+    }
+
+    .important-note h4 {
+      color: #c0392b;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 2rem;
+      }
+
+      .card {
+        padding: 20px;
+      }
+
+      .tools-grid,
+      .agent-capabilities {
+        grid-template-columns: 1fr;
+      }
+
+      .process-flow {
+        flex-direction: column;
+      }
+
+      .process-step:not(:last-child):after {
+        content: "⬇";
+        right: 50%;
+        top: 100%;
+        transform: translateX(50%);
+      }
+
+      .central-agent {
+        width: 160px;
+        height: 80px;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🎨 تصميم Customer Service AI Agent</h1>
+      <p>قبل ما نبدأ التطبيق، تعالوا نفهم التصميم والمعمارية بالتفصيل</p>
+    </div>
+
+    <div class="card">
+      <h2>📋 مقدمة: من التخطيط للتصميم</h2>
+      <p>في الفيديو ده، هنناقش تصميم Customer Service AI Agent tool قبل ما نطبقه عملياً. زي ما اتكلمنا في الفيديو اللي
+        فات، عندنا تلت functions وواحد document هيكونوا مصادر البيانات للأداة.</p>
+
+      <div class="design-overview">
+        <h3>🎯 الهدف من فهم التصميم</h3>
+        <ul>
+          <li>فهم العلاقة بين المكونات المختلفة</li>
+          <li>تحديد كيفية تحويل Functions لـ Tools</li>
+          <li>معرفة طريقة معالجة الوثائق والمستندات</li>
+          <li>فهم كيفية دمج كل الأدوات في Agent واحد</li>
+          <li>الاستعداد للتطبيق العملي</li>
+        </ul>
+      </div>
+
+      <div class="highlight-box">
+        <h4>🌟 ليه التصميم الجيد مهم؟</h4>
+        <ul>
+          <li>يضمن سهولة التطوير والصيانة</li>
+          <li>يخلي النظام قابل للتوسع والتطوير</li>
+          <li>يقلل من الأخطاء والمشاكل</li>
+          <li>يسهل فهم النظام على الفريق</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🔧 مصادر البيانات: Functions والوثائق</h2>
+      <p>قبل ما نصمم الـ Tools، لازم نفهم المصادر اللي هنشتغل عليها:</p>
+
+      <div class="tools-grid">
+        <div class="tool-card">
+          <h4><span class="icon">📦</span>Function 1: get_order_item()</h4>
+          <div class="function-details">
+            <h5>📝 الوظيفة:</h5>
+            <p>بتوفر قائمة بالعناصر الموجودة في طلب معين لما تدخل لها Order ID</p>
+            <h5>🔍 الاستخدام:</h5>
+            <ul>
+              <li>معرفة إيش العميل طلبه</li>
+              <li>عرض تفاصيل المنتجات</li>
+              <li>التحقق من صحة الطلب</li>
+            </ul>
+          </div>
+          <div class="tool-creation-process">
+            <h4>⚙️ التحويل لـ Tool:</h4>
+            <p>هنعمل Order Item Tool مبني على الـ function ده باستخدام function calling</p>
+          </div>
+        </div>
+
+        <div class="tool-card">
+          <h4><span class="icon">🚚</span>Function 2: get_delivery_date()</h4>
+          <div class="function-details">
+            <h5>📝 الوظيفة:</h5>
+            <p>بتوفر تاريخ التسليم لعنصر معين في الطلب</p>
+            <h5>🔍 الاستخدام:</h5>
+            <ul>
+              <li>معرفة موعد وصول الطلب</li>
+              <li>تتبع حالة الشحن</li>
+              <li>التحقق من التأخير</li>
+            </ul>
+          </div>
+          <div class="tool-creation-process">
+            <h4>⚙️ التحويل لـ Tool:</h4>
+            <p>هنعمل Delivery Date Tool مبني على الـ function ده</p>
+          </div>
+        </div>
+
+        <div class="tool-card">
+          <h4><span class="icon">↩️</span>Function 3: get_item_return_days()</h4>
+          <div class="function-details">
+            <h5>📝 الوظيفة:</h5>
+            <p>بتوفر أقصى عدد أيام يمكن إرجاع المنتج خلالها</p>
+            <h5>🔍 الاستخدام:</h5>
+            <ul>
+              <li>شرح سياسة الإرجاع</li>
+              <li>حساب المدة المتبقية للإرجاع</li>
+              <li>توضيح شروط الإرجاع</li>
+            </ul>
+          </div>
+          <div class="tool-creation-process">
+            <h4>⚙️ التحويل لـ Tool:</h4>
+            <p>هنعمل Return Policy Tool مبني على الـ function ده</p>
+          </div>
+        </div>
+
+        <div class="tool-card">
+          <h4><span class="icon">📄</span>Document: CustomerService.pdf</h4>
+          <div class="function-details">
+            <h5>📝 المحتوى:</h5>
+            <p>جزء من exercise files في الكورس، يحتوي على معلومات خدمة العملاء</p>
+            <h5>🔍 الاستخدام:</h5>
+            <ul>
+              <li>معلومات التواصل</li>
+              <li>إجراءات خدمة العملاء</li>
+              <li>الأسئلة الشائعة</li>
+              <li>السياسات العامة</li>
+            </ul>
+          </div>
+          <div class="pdf-processing">
+            <h4>⚙️ معالجة الوثيقة:</h4>
+            <div class="process-flow">
+              <div class="process-step">Upload</div>
+              <div class="process-step">Chunk</div>
+              <div class="process-step">Embed</div>
+              <div class="process-step">Index</div>
+              <div class="process-step">Query Engine</div>
+              <div class="process-step">Support Tool</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>⚙️ عملية بناء الـ Tools خطوة بخطوة</h2>
+
+      <div class="implementation-steps">
+        <h4>🎯 الخطوات التفصيلية لبناء النظام:</h4>
+
+        <div class="workflow-step">
+          <div class="step-number">1</div>
+          <h4>إنشاء Order Item Tool</h4>
+          <div class="detailed-explanation">
+            <h4>العملية:</h4>
+            <ul>
+              <li>ربط get_order_item() function بـ Tool interface</li>
+              <li>تحديد input parameters (Order ID)</li>
+              <li>تنسيق output للعرض على العميل</li>
+              <li>إضافة error handling للحالات الاستثنائية</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="workflow-step">
+          <div class="step-number">2</div>
+          <h4>إنشاء Delivery Date Tool</h4>
+          <div class="detailed-explanation">
+            <h4>العملية:</h4>
+            <ul>
+              <li>ربط get_delivery_date() function</li>
+              <li>تحديد input parameters (Item ID أو Order ID)</li>
+              <li>تنسيق التاريخ بطريقة مفهومة للعميل</li>
+              <li>إضافة معلومات إضافية عن حالة الشحن</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="workflow-step">
+          <div class="step-number">3</div>
+          <h4>إنشاء Return Policy Tool</h4>
+          <div class="detailed-explanation">
+            <h4>العملية:</h4>
+            <ul>
+              <li>ربط get_item_return_days() function</li>
+              <li>تحديد input parameters (Item ID)</li>
+              <li>حساب التاريخ النهائي للإرجاع</li>
+              <li>إضافة شروط وقوانين الإرجاع</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="workflow-step">
+          <div class="step-number">4</div>
+          <h4>معالجة CustomerService.pdf</h4>
+          <div class="pdf-processing">
+            <h4>📄 خطوات معالجة الوثيقة:</h4>
+            <div class="detailed-explanation">
+              <h4>أ. Upload الوثيقة:</h4>
+              <p>رفع ملف CustomerService.pdf للنظام</p>
+
+              <h4>ب. Chunking العملية:</h4>
+              <p>تقسيم الوثيقة لقطع صغيرة قابلة للمعالجة</p>
+
+              <h4>ج. Embedding الفقرات:</h4>
+              <p>تحويل كل قطعة لـ vector representation</p>
+
+              <h4>د. إنشاء Index:</h4>
+              <p>تجميع الـ embeddings في فهرس قابل للبحث</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="workflow-step">
+          <div class="step-number">5</div>
+          <h4>إنشاء Support Query Engine</h4>
+          <div class="detailed-explanation">
+            <h4>العملية:</h4>
+            <ul>
+              <li>بناء query engine بناءً على الـ index</li>
+              <li>تحسين خوارزميات البحث</li>
+              <li>تحديد relevance thresholds</li>
+              <li>تنسيق النتائج بطريقة مفهومة</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="workflow-step">
+          <div class="step-number">6</div>
+          <h4>إنشاء Support Tool</h4>
+          <div class="detailed-explanation">
+            <h4>العملية:</h4>
+            <ul>
+              <li>ربط Query Engine بـ Tool interface</li>
+              <li>تحديد أنواع الأسئلة المدعومة</li>
+              <li>إضافة context awareness</li>
+              <li>تحسين جودة الإجابات</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="workflow-step">
+          <div class="step-number">7</div>
+          <h4>إنشاء Customer Service Agent</h4>
+          <div class="detailed-explanation">
+            <h4>العملية النهائية:</h4>
+            <ul>
+              <li>دمج الـ 4 Tools في Agent واحد</li>
+              <li>إضافة Planning Pattern للتنسيق</li>
+              <li>تحديد استراتيجيات اختيار الأدوات</li>
+              <li>إضافة conversation management</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🏗️ المعمارية النهائية للـ Agent</h2>
+
+      <div class="architecture-diagram">
+        <h3>🎯 Customer Service Agent Architecture</h3>
+
+        <div class="central-agent">
+          🤖 Customer Service Agent
+        </div>
+
+        <div class="tools-grid">
+          <div class="tool-card">
+            <h4><span class="icon">📦</span>Order Item Tool</h4>
+            <p>مبني على get_order_item() function</p>
+          </div>
+          <div class="tool-card">
+            <h4><span class="icon">🚚</span>Delivery Date Tool</h4>
+            <p>مبني على get_delivery_date() function</p>
+          </div>
+          <div class="tool-card">
+            <h4><span class="icon">↩️</span>Return Policy Tool</h4>
+            <p>مبني على get_item_return_days() function</p>
+          </div>
+          <div class="tool-card">
+            <h4><span class="icon">📞</span>Support Tool</h4>
+            <p>مبني على CustomerService.pdf index</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <h4>🎯 كيف الـ Agent هيشتغل:</h4>
+        <ul>
+          <li>يستقبل استفسار من العميل</li>
+          <li>يحلل نوع السؤال ويحدد الأدوات المناسبة</li>
+          <li>يستخدم أي من الـ 4 Tools المتاحة للإجابة</li>
+          <li>يدمج النتائج من عدة أدوات لو لزم الأمر</li>
+          <li>يقدم إجابة شاملة ومفيدة للعميل</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>💡 قدرات الـ Agent المتوقعة</h2>
+
+      <div class="agent-capabilities">
+        <div class="capability-item">
+          <h4>🔍 تحليل ذكي للأسئلة</h4>
+          <p>فهم نية العميل واختيار الأدوات المناسبة</p>
+        </div>
+
+        <div class="capability-item">
+          <h4>🔗 تكامل متعدد المصادر</h4>
+          <p>دمج معلومات من Functions والوثائق</p>
+        </div>
+
+        <div class="capability-item">
+          <h4>📋 تخطيط متقدم</h4>
+          <p>ترتيب استخدام الأدوات للحصول على أفضل نتيجة</p>
+        </div>
+
+        <div class="capability-item">
+          <h4>💬 تفاعل طبيعي</h4>
+          <p>محادثة سلسة ومفهومة مع العملاء</p>
+        </div>
+
+        <div class="capability-item">
+          <h4>⚡ استجابة سريعة</h4>
+          <p>إجابات فورية ودقيقة على الاستفسارات</p>
+        </div>
+
+        <div class="capability-item">
+          <h4>🔄 تعلم مستمر</h4>
+          <p>تحسين الأداء من كل تفاعل مع العملاء</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📊 سيناريوهات الاستخدام المتوقعة</h2>
+
+      <div class="detailed-explanation">
+        <h4>🎯 أمثلة لكيفية استخدام الأدوات:</h4>
+
+        <div class="implementation-steps">
+          <h4>سيناريو 1: سؤال بسيط عن الطلب</h4>
+          <div class="workflow-step">
+            <div class="step-number">Q</div>
+            <h4>سؤال العميل</h4>
+            <p>"إيش موجود في أوردر رقم 12345؟"</p>
+          </div>
+          <div class="workflow-step">
+            <div class="step-number">A</div>
+            <h4>استراتيجية الحل</h4>
+            <p>استخدام Order Item Tool فقط للحصول على قائمة المنتجات</p>
+          </div>
+        </div>
+
+        <div class="implementation-steps">
+          <h4>سيناريو 2: سؤال معقد متعدد الجوانب</h4>
+          <div class="workflow-step">
+            <div class="step-number">Q</div>
+            <h4>سؤال العميل</h4>
+            <p>"عايز أعرف تفاصيل أوردر 12345 وإمتى هيوصل وإيه سياسة الإرجاع"</p>
+          </div>
+          <div class="workflow-step">
+            <div class="step-number">A</div>
+            <h4>استراتيجية الحل</h4>
+            <ul>
+              <li>Order Item Tool للمنتجات</li>
+              <li>Delivery Date Tool للتوقيت</li>
+              <li>Return Policy Tool لكل منتج</li>
+              <li>دمج كل المعلومات في إجابة واحدة</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="implementation-steps">
+          <h4>سيناريو 3: سؤال عن سياسات عامة</h4>
+          <div class="workflow-step">
+            <div class="step-number">Q</div>
+            <h4>سؤال العميل</h4>
+            <p>"إيه هي سياسة الشركة في التعامل مع الشكاوى؟"</p>
+          </div>
+          <div class="workflow-step">
+            <div class="step-number">A</div>
+            <h4>استراتيجية الحل</h4>
+            <p>استخدام Support Tool للبحث في CustomerService.pdf</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🚀 الخطوات القادمة في التطبيق</h2>
+
+      <div class="next-steps">
+        <h4>📅 ما هنعمله في الفيديوهات الجاية:</h4>
+        <ul>
+          <li><strong>التطبيق العملي:</strong> بناء كل tool خطوة بخطوة</li>
+          <li><strong>معالجة الوثائق:</strong> تطبيق PDF processing workflow</li>
+          <li><strong>دمج الأدوات:</strong> إنشاء الـ Agent النهائي</li>
+          <li><strong>الاختبار:</strong> تجربة سيناريوهات مختلفة</li>
+          <li><strong>التحسين:</strong> تطوير الأداء وإضافة ميزات</li>
+        </ul>
+      </div>
+
+      <div class="highlight-box">
+        <h4>💡 نصائح للمتابعة:</h4>
+        <ul>
+          <li>تأكد من فهم كل خطوة في التصميم</li>
+          <li>حضر البيانات والملفات المطلوبة</li>
+          <li>اعد بيئة التطوير للتطبيق العملي</li>
+          <li>تابع الفيديوهات بترتيب للحصول على أفضل فهم</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="important-note">
+        <h4>📝 ملخص التصميم</h4>
+        <p>في الفصل ده شرحنا التصميم الكامل للـ Customer Service AI Agent. هنبني 4 tools مختلفة: 3 منها مبنية على
+          functions و1 مبني على PDF document. الـ Agent النهائي هيستخدم كل الـ tools دي عشان يجاوب على أسئلة العملاء. في
+          الفيديوهات الجاية هنطبق ونستخدم الـ Agent ده عملياً.</p>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

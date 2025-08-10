@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تصميم Customer Service AI Agent - شرح تفصيلي مستفيض</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      line-height: 1.7;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      color: white;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .card h2 {
+      color: #2c3e50;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      border-bottom: 3px solid #e74c3c;
+      padding-bottom: 10px;
+    }
+
+    .card h3 {
+      color: #34495e;
+      font-size: 1.4rem;
+      margin: 25px 0 15px 0;
+      position: relative;
+    }
+
+    .card h3:before {
+      content: "🔹";
+      margin-left: 10px;
+    }
+
+    .card p {
+      color: #555;
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+    }
+
+    .card ul {
+      color: #555;
+      margin: 15px 0;
+      padding-right: 20px;
+    }
+
+    .card li {
+      margin-bottom: 10px;
+      font-size: 1.05rem;
+    }
+
+    .design-overview {
+      background: linear-gradient(135deg, #e8f5e8, #d4edda);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border: 2px solid #28a745;
+    }
+
+    .design-overview h3 {
+      color: #155724;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+
+    .architecture-diagram {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      padding: 30px;
+      border-radius: 15px;
+      margin: 25px 0;
+      text-align: center;
+      border: 2px solid #6c757d;
+    }
+
+    .component-box {
+      background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 15px 0;
+      border: 2px solid #ffc107;
+    }
+
+    .component-box h4 {
+      color: #856404;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .tool-description {
+      background: linear-gradient(135deg, #d1ecf1, #b3e5fc);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 15px 0;
+      border: 2px solid #17a2b8;
+    }
+
+    .tool-description h4 {
+      color: #0c5460;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .implementation-steps {
+      background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border: 2px solid #9c27b0;
+    }
+
+    .implementation-steps h3 {
+      color: #4a148c;
+      margin-bottom: 15px;
+    }
+
+    .step-number {
+      background: #9c27b0;
+      color: white;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 10px;
+      font-weight: bold;
+    }
+
+    .highlight-box {
+      background: linear-gradient(135deg, #ffebee, #ffcdd2);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+      border: 2px solid #f44336;
+    }
+
+    .highlight-box h4 {
+      color: #c62828;
+      margin-bottom: 10px;
+    }
+
+    .workflow-container {
+      background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border: 2px solid #4caf50;
+    }
+
+    .workflow-container h3 {
+      color: #2e7d32;
+      margin-bottom: 15px;
+    }
+
+    .note-box {
+      background: linear-gradient(135deg, #fff8e1, #ffecb3);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+      border: 2px solid #ff9800;
+    }
+
+    .note-box h4 {
+      color: #e65100;
+      margin-bottom: 10px;
+    }
+
+    .arrow {
+      text-align: center;
+      font-size: 2rem;
+      color: #6c757d;
+      margin: 20px 0;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .benefit-card {
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      padding: 20px;
+      border-radius: 12px;
+      border: 2px solid #2196f3;
+      text-align: center;
+    }
+
+    .benefit-card h4 {
+      color: #0d47a1;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>تصميم Customer Service AI Agent</h1>
+      <p>شرح تفصيلي مستفيض لهيكل وتصميم نظام دعم العملاء الذكي</p>
+    </div>
+
+    <div class="card">
+      <h2>🎯 نظرة عامة على التصميم</h2>
+      <div class="design-overview">
+        <h3>الهدف من الفيديو</h3>
+        <p>في الفيديو ده هنتكلم عن تصميم أداة Customer Service AI Agent قبل ما نبدأ في تنفيذها فعلياً. ده خطوة مهمة جداً
+          عشان نفهم كل الأجزاء والمكونات اللي هنحتاجها ونشوف إزاي هتشتغل مع بعض.</p>
+      </div>
+
+      <p>المدرس بيوضح إن عملية التصميم دي ضرورية عشان:</p>
+      <ul>
+        <li><strong>نفهم الأدوات المطلوبة:</strong> إيه هي الوظائف اللي محتاجينها</li>
+        <li><strong>نخطط للتنفيذ:</strong> إزاي هنربط كل حاجة ببعض</li>
+        <li><strong>نحدد المصادر:</strong> إيه هي الملفات والبيانات اللي هنستخدمها</li>
+        <li><strong>نصمم التدفق:</strong> إزاي ال Agent هيتعامل مع استفسارات العملاء</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>🏗️ مكونات النظام الأساسية</h2>
+
+      <div class="architecture-diagram">
+        <h3>الهيكل العام للنظام</h3>
+        <p><strong>3 وظائف برمجية + 1 مستند = 4 أدوات للـ AI Agent</strong></p>
+      </div>
+
+      <h3>الوظائف البرمجية الثلاثة</h3>
+
+      <div class="tool-description">
+        <h4>1. get_order_item() Function</h4>
+        <p><strong>الوظيفة:</strong> بتجيب قائمة بكل المنتجات اللي موجودة في طلب معين</p>
+        <p><strong>المدخل:</strong> Order ID (رقم الطلب)</p>
+        <p><strong>المخرج:</strong> قائمة بكل الحاجات اللي العميل طلبها</p>
+        <p><strong>استخدامها:</strong> لما العميل يسأل "إيه اللي طلبته؟" أو "فين طلبي؟"</p>
+        <p><strong>الأداة المبنية عليها:</strong> Order Item Tool باستخدام Function Calling</p>
+      </div>
+
+      <div class="tool-description">
+        <h4>2. get_delivery_date() Function</h4>
+        <p><strong>الوظيفة:</strong> بتجيب تاريخ التسليم المتوقع لمنتج معين</p>
+        <p><strong>المدخل:</strong> Item (المنتج)</p>
+        <p><strong>المخرج:</strong> التاريخ اللي المنتج هيوصل فيه</p>
+        <p><strong>استخدامها:</strong> لما العميل يسأل "امتى طلبي هيوصل؟"</p>
+        <p><strong>الأداة المبنية عليها:</strong> Delivery Date Tool</p>
+      </div>
+
+      <div class="tool-description">
+        <h4>3. get_item_return_days() Function</h4>
+        <p><strong>الوظيفة:</strong> بتجيب أقصى عدد أيام ممكن ترجع فيها المنتج</p>
+        <p><strong>المدخل:</strong> Item (المنتج)</p>
+        <p><strong>المخرج:</strong> عدد الأيام المسموح فيها بالإرجاع</p>
+        <p><strong>استخدامها:</strong> لما العميل يسأل "ممكن أرجع المنتج ده؟" أو "إيه سياسة الإرجاع؟"</p>
+        <p><strong>الأداة المبنية عليها:</strong> Return Policy Tool</p>
+      </div>
+
+      <h3>المستند الداعم</h3>
+
+      <div class="component-box">
+        <h4>CustomerService.pdf Document</h4>
+        <p><strong>المحتوى:</strong> مستند شامل بكل سياسات وإجراءات خدمة العملاء</p>
+        <p><strong>مكانه:</strong> جزء من ملفات التمرين في الكورس</p>
+        <p><strong>استخدامه:</strong> هيتم رفعه وتقسيمه لقطع صغيرة وتحويله لـ Embeddings</p>
+        <p><strong>الأداة المبنية عليه:</strong> Support Tool عن طريق Support Query Engine</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>⚙️ خطوات التنفيذ المفصلة</h2>
+
+      <div class="implementation-steps">
+        <h3>مراحل بناء النظام</h3>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">1</span>
+          <strong>تجهيز الوظائف البرمجية</strong>
+          <p>تحويل كل وظيفة من الثلاث وظائف لأداة منفصلة باستخدام Function Calling</p>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">2</span>
+          <strong>معالجة المستند</strong>
+          <p>رفع CustomerService.pdf وتقسيمه لقطع صغيرة (Chunking)</p>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">3</span>
+          <strong>إنشاء الفهرس</strong>
+          <p>تحويل القطع لـ Embeddings وحفظها في Index</p>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">4</span>
+          <strong>بناء محرك الاستعلام</strong>
+          <p>إنشاء Support Query Engine للبحث في المستند</p>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">5</span>
+          <strong>إنشاء أداة الدعم</strong>
+          <p>تحويل محرك الاستعلام لـ Support Tool</p>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">6</span>
+          <strong>بناء الـ AI Agent</strong>
+          <p>جمع كل الأدوات الأربعة في Customer Service Agent واحد</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🔧 تفاصيل الأدوات الأربعة</h2>
+
+      <div class="workflow-container">
+        <h3>كيفية عمل كل أداة</h3>
+
+        <div class="tool-description">
+          <h4>🛒 Order Item Tool</h4>
+          <p><strong>المبدأ:</strong> Function Calling</p>
+          <p><strong>الوظيفة:</strong> لما العميل يدي رقم الطلب، الأداة دي بتستدعي get_order_item() وترجع كل التفاصيل
+          </p>
+          <p><strong>مثال على الاستخدام:</strong> "عايز أعرف إيه اللي طلبته في الأوردر رقم 12345"</p>
+        </div>
+
+        <div class="tool-description">
+          <h4>🚚 Delivery Date Tool</h4>
+          <p><strong>المبدأ:</strong> Function Calling</p>
+          <p><strong>الوظيفة:</strong> بتاخد اسم المنتج وترجع تاريخ التسليم المتوقع</p>
+          <p><strong>مثال على الاستخدام:</strong> "امتى اللابتوب اللي طلبته هيوصل؟"</p>
+        </div>
+
+        <div class="tool-description">
+          <h4>↩️ Return Policy Tool</h4>
+          <p><strong>المبدأ:</strong> Function Calling</p>
+          <p><strong>الوظيفة:</strong> بتحدد فترة الإرجاع المسموحة لكل منتج</p>
+          <p><strong>مثال على الاستخدام:</strong> "ممكن أرجع الموبايل ده بعد أسبوعين؟"</p>
+        </div>
+
+        <div class="tool-description">
+          <h4>📋 Support Tool</h4>
+          <p><strong>المبدأ:</strong> RAG (Retrieval-Augmented Generation)</p>
+          <p><strong>الوظيفة:</strong> بتبحث في مستند CustomerService.pdf عن إجابات للأسئلة العامة</p>
+          <p><strong>مثال على الاستخدام:</strong> "إيه سياسة الشركة في التعامل مع المنتجات المعيبة؟"</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🎯 كيفية عمل الـ AI Agent</h2>
+
+      <div class="highlight-box">
+        <h4>آلية اتخاذ القرار</h4>
+        <p>الـ Customer Service Agent مش بس بيستخدم أداة واحدة، ده بيقدر يختار الأداة المناسبة حسب نوع السؤال:</p>
+      </div>
+
+      <h3>سيناريوهات مختلفة للاستخدام</h3>
+
+      <div class="component-box">
+        <h4>📞 سؤال عن تفاصيل الطلب</h4>
+        <p><strong>السؤال:</strong> "عايز أعرف إيه اللي في طلبي رقم 789"</p>
+        <p><strong>الأداة المستخدمة:</strong> Order Item Tool</p>
+        <p><strong>العملية:</strong> استدعاء get_order_item(789) وعرض النتائج</p>
+      </div>
+
+      <div class="component-box">
+        <h4>🚛 سؤال عن موعد التسليم</h4>
+        <p><strong>السؤال:</strong> "امتى الكاميرا هتوصل؟"</p>
+        <p><strong>الأداة المستخدمة:</strong> Delivery Date Tool</p>
+        <p><strong>العملية:</strong> استدعاء get_delivery_date("camera") وإرجاع التاريخ</p>
+      </div>
+
+      <div class="component-box">
+        <h4>🔄 سؤال عن الإرجاع</h4>
+        <p><strong>السؤال:</strong> "لسه ممكن أرجع السماعات دي؟"</p>
+        <p><strong>الأداة المستخدمة:</strong> Return Policy Tool</p>
+        <p><strong>العملية:</strong> استدعاء get_item_return_days("headphones") ومقارنة التاريخ</p>
+      </div>
+
+      <div class="component-box">
+        <h4>❓ سؤال عام عن السياسات</h4>
+        <p><strong>السؤال:</strong> "إيه إجراءات الشكاوى في الشركة؟"</p>
+        <p><strong>الأداة المستخدمة:</strong> Support Tool</p>
+        <p><strong>العملية:</strong> البحث في CustomerService.pdf عن المعلومات المطلوبة</p>
+      </div>
+
+      <div class="note-box">
+        <h4>💡 ذكاء النظام</h4>
+        <p>الـ Agent بيقدر يستخدم أكتر من أداة في نفس الوقت لو السؤال محتاج كده. مثلاً لو العميل سأل "طلبي رقم 123 فيه
+          إيه وامتى هيوصل؟" هيستخدم Order Item Tool الأول عشان يعرف المنتجات، وبعدين Delivery Date Tool لكل منتج.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📈 فوائد هذا التصميم</h2>
+
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <h4>🎯 دقة في الإجابات</h4>
+          <p>كل أداة متخصصة في نوع معين من الأسئلة</p>
+        </div>
+
+        <div class="benefit-card">
+          <h4>⚡ سرعة في الاستجابة</h4>
+          <p>البيانات جاهزة ومنظمة للوصول السريع</p>
+        </div>
+
+        <div class="benefit-card">
+          <h4>🔧 سهولة الصيانة</h4>
+          <p>كل أداة منفصلة وممكن تحديثها لوحدها</p>
+        </div>
+
+        <div class="benefit-card">
+          <h4>📊 شمولية في التغطية</h4>
+          <p>يغطي كل احتياجات دعم العملاء الأساسية</p>
+        </div>
+
+        <div class="benefit-card">
+          <h4>🤖 ذكاء في الاختيار</h4>
+          <p>يختار الأداة المناسبة تلقائياً</p>
+        </div>
+
+        <div class="benefit-card">
+          <h4>📚 مرجعية شاملة</h4>
+          <p>يعتمد على مستندات الشركة الرسمية</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🔮 الخطوات القادمة</h2>
+
+      <div class="workflow-container">
+        <h3>ما سيتم تنفيذه في الفيديوهات القادمة</h3>
+
+        <p>المدرس وضح إن الفيديوهات الجاية في الفصل ده هتركز على:</p>
+
+        <ul>
+          <li><strong>التنفيذ العملي:</strong> كتابة الكود الفعلي لكل أداة</li>
+          <li><strong>إعداد البيئة:</strong> تحضير كل المكتبات والملفات المطلوبة</li>
+          <li><strong>اختبار النظام:</strong> تجربة الـ Agent مع أسئلة مختلفة</li>
+          <li><strong>تحسين الأداء:</strong> تطوير استجابات النظام</li>
+          <li><strong>التطبيق العملي:</strong> استخدام الـ Agent في سيناريوهات حقيقية</li>
+        </ul>
+      </div>
+
+      <div class="highlight-box">
+        <h4>🎯 الهدف النهائي</h4>
+        <p>في نهاية الفصل، هيكون عندنا Customer Service AI Agent كامل وجاهز للاستخدام، قادر على التعامل مع كل أنواع
+          استفسارات العملاء بكفاءة عالية وسرعة فائقة.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>💭 نصائح للتطبيق العملي</h2>
+
+      <div class="note-box">
+        <h4>🎯 للمطورين</h4>
+        <ul>
+          <li>اتأكد إن كل Function بتشتغل صح قبل ما تحولها لأداة</li>
+          <li>اختبر كل أداة منفصلة قبل ما تجمعهم في الـ Agent</li>
+          <li>استخدم Error Handling مناسب لكل حالة</li>
+          <li>اعمل Logging لتتبع أداء كل أداة</li>
+        </ul>
+      </div>
+
+      <div class="note-box">
+        <h4>📊 للشركات</h4>
+        <ul>
+          <li>حدد البيانات اللي محتاجها بدقة قبل البداية</li>
+          <li>اعمل تحديث دوري للمستندات والسياسات</li>
+          <li>راقب أداء النظام وسجل استفسارات العملاء</li>
+          <li>حضر فريق دعم بشري للحالات المعقدة</li>
+        </ul>
+      </div>
+
+      <div class="note-box">
+        <h4>🔄 للتطوير المستمر</h4>
+        <ul>
+          <li>اجمع Feedback من العملاء باستمرار</li>
+          <li>حلل الأسئلة اللي النظام مش قادر يجاوب عليها</li>
+          <li>طور أدوات جديدة حسب احتياجات العملاء</li>
+          <li>حسن من دقة وسرعة الأدوات الموجودة</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

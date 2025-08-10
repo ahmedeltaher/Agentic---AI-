@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>استخدام Customer Service AI Agent - تجربة عملية شاملة</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      line-height: 1.7;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      color: white;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .card h2 {
+      color: #2c3e50;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      border-bottom: 3px solid #e74c3c;
+      padding-bottom: 10px;
+    }
+
+    .card h3 {
+      color: #34495e;
+      font-size: 1.4rem;
+      margin: 25px 0 15px 0;
+      position: relative;
+    }
+
+    .card h3:before {
+      content: "🔹";
+      margin-left: 10px;
+    }
+
+    .card p {
+      color: #555;
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+    }
+
+    .card ul {
+      color: #555;
+      margin: 15px 0;
+      padding-right: 20px;
+    }
+
+    .card li {
+      margin-bottom: 10px;
+      font-size: 1.05rem;
+    }
+
+    .card ol {
+      color: #555;
+      margin: 15px 0;
+      padding-right: 20px;
+    }
+
+    .card ol li {
+      margin-bottom: 10px;
+      font-size: 1.05rem;
+    }
+
+    .overview-box {
+      background: linear-gradient(135deg, #e8f5e8, #d4edda);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border: 2px solid #28a745;
+    }
+
+    .overview-box h3 {
+      color: #155724;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+
+    .test-scenario {
+      background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border: 2px solid #ffc107;
+    }
+
+    .test-scenario h3 {
+      color: #856404;
+      margin-bottom: 15px;
+    }
+
+    .question-box {
+      background: linear-gradient(135deg, #d1ecf1, #b3e5fc);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 15px 0;
+      border: 2px solid #17a2b8;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .question-box h4 {
+      color: #0c5460;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .execution-steps {
+      background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border: 2px solid #9c27b0;
+    }
+
+    .execution-steps h3 {
+      color: #4a148c;
+      margin-bottom: 15px;
+    }
+
+    .step-number {
+      background: #9c27b0;
+      color: white;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 10px;
+      font-weight: bold;
+    }
+
+    .ai-thinking {
+      background: linear-gradient(135deg, #ffebee, #ffcdd2);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+      border: 2px solid #f44336;
+    }
+
+    .ai-thinking h4 {
+      color: #c62828;
+      margin-bottom: 10px;
+    }
+
+    .result-box {
+      background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+      border: 2px solid #4caf50;
+    }
+
+    .result-box h4 {
+      color: #2e7d32;
+      margin-bottom: 10px;
+    }
+
+    .note-box {
+      background: linear-gradient(135deg, #fff8e1, #ffecb3);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+      border: 2px solid #ff9800;
+    }
+
+    .note-box h4 {
+      color: #e65100;
+      margin-bottom: 10px;
+    }
+
+    .arrow {
+      text-align: center;
+      font-size: 2rem;
+      color: #6c757d;
+      margin: 20px 0;
+    }
+
+    .memory-box {
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+      border: 2px solid #2196f3;
+    }
+
+    .memory-box h4 {
+      color: #0d47a1;
+      margin-bottom: 10px;
+    }
+
+    .pattern-highlight {
+      background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+      border: 2px solid #9c27b0;
+    }
+
+    .pattern-highlight h4 {
+      color: #4a148c;
+      margin-bottom: 10px;
+    }
+
+    .error-scenario {
+      background: linear-gradient(135deg, #ffebee, #ffcdd2);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border: 2px solid #f44336;
+    }
+
+    .error-scenario h3 {
+      color: #c62828;
+      margin-bottom: 15px;
+    }
+
+    .complex-scenario {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border: 2px solid #6c757d;
+    }
+
+    .complex-scenario h3 {
+      color: #495057;
+      margin-bottom: 15px;
+    }
+
+    .insights-box {
+      background: linear-gradient(135deg, #e8f5e8, #d4edda);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border: 2px solid #28a745;
+    }
+
+    .insights-box h3 {
+      color: #155724;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>استخدام Customer Service AI Agent</h1>
+      <p>تجربة عملية شاملة لاختبار قدرات الوكيل الذكي لخدمة العملاء</p>
+    </div>
+
+    <div class="card">
+      <h2>🎯 نظرة عامة على التجربة</h2>
+      <div class="overview-box">
+        <h3>الهدف من الفيديو</h3>
+        <p>دلوقتي وصلنا للحظة الحقيقة! هنجرب الـ Customer Service AI Agent اللي بنيناه مع أهداف وأسئلة مختلفة ونشوف إزاي
+          بيشتغل في الواقع. المدرس جهز التجارب مسبقاً عشان توفير الوقت.</p>
+      </div>
+
+      <p>التجارب هتغطي سيناريوهات مختلفة:</p>
+      <ul>
+        <li><strong>سؤال يحتاج أدوات متعددة:</strong> استعلام عن سياسة الإرجاع</li>
+        <li><strong>سؤال معقد متعدد الأجزاء:</strong> استعلام شامل عن طلب</li>
+        <li><strong>التعامل مع الأخطاء:</strong> استعلام عن طلب غير موجود</li>
+      </ul>
+
+      <div class="note-box">
+        <h4>⏰ ملاحظة عن التوقيت</h4>
+        <p>المدرس نبه إن العمليات دي ممكن تاخد وقت، عشان كده جهز النتائج مسبقاً. ده طبيعي لأن الـ Agent بيحتاج يفكر
+          ويحلل قبل ما ينفذ كل خطوة.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🧪 التجربة الأولى: سؤال يحتاج تخطيط</h2>
+
+      <div class="test-scenario">
+        <h3>السيناريو الأول</h3>
+        <div class="question-box">
+          <h4>❓ السؤال المطروح</h4>
+          <p>"What is the return policy for order number 1001?"</p>
+          <p><em>إيه سياسة الإرجاع للطلب رقم 1001؟</em></p>
+        </div>
+      </div>
+
+      <h3>التحدي في السؤال ده</h3>
+      <div class="ai-thinking">
+        <h4>🤔 لماذا هذا السؤال معقد؟</h4>
+        <p>مفيش وظيفة واحدة مباشرة ترد على السؤال ده! الـ Agent محتاج:</p>
+        <ol>
+          <li>يعرف الأول إيه المنتجات الموجودة في الطلب</li>
+          <li>بعدين يسأل عن سياسة الإرجاع لكل منتج لوحده</li>
+          <li>يجمع النتائج ويقدم إجابة شاملة</li>
+        </ol>
+      </div>
+
+      <h3>تحليل خطوات تنفيذ الـ AI Agent</h3>
+
+      <div class="execution-steps">
+        <h3>مراحل التنفيذ بالتفصيل</h3>
+
+        <div class="memory-box">
+          <h4>🧠 الذاكرة قصيرة المدى</h4>
+          <p><strong>الخطوة الأولى:</strong> إضافة السؤال لذاكرة الـ Agent قصيرة المدى. ده مهم عشان الـ Agent يفتكر
+            السياق أثناء المعالجة.</p>
+        </div>
+
+        <div class="pattern-highlight">
+          <h4>🎯 أنماط الـ AI في العمل</h4>
+          <p>المدرس لاحظ إن الـ Agent استخدم نمطين مهمين:</p>
+          <ul>
+            <li><strong>Planning Pattern:</strong> تخطيط الخطوات المطلوبة</li>
+            <li><strong>Tool Use Pattern:</strong> استخدام الأدوات المناسبة</li>
+          </ul>
+        </div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">1</span>
+          <strong>تحليل السؤال وتحديد الأداة الأولى</strong>
+          <div class="ai-thinking">
+            <h4>🔍 تحليل الـ LLM</h4>
+            <p>الـ LLM حلل السؤال والوظائف المتاحة وقرر إن أول خطوة لازم تكون استدعاء get_order_items مع order_id = 1001
+            </p>
+          </div>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">2</span>
+          <strong>تنفيذ الاستعلام الأول</strong>
+          <div class="result-box">
+            <h4>📦 نتيجة get_order_items(1001)</h4>
+            <p><strong>المنتجات المرجعة:</strong> laptop و mouse</p>
+          </div>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">3</span>
+          <strong>تحليل النتيجة والتخطيط للخطوة التالية</strong>
+          <div class="ai-thinking">
+            <h4>🧠 التفكير المنطقي</h4>
+            <p>الـ LLM فهم إن محتاج يسأل عن سياسة الإرجاع لكل منتج منفصل، وحدد المعاملات الصحيحة لكل استدعاء</p>
+          </div>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">4</span>
+          <strong>تنفيذ حلقة التكرار</strong>
+          <div class="result-box">
+            <h4>🔄 For-loop execution</h4>
+            <p><strong>استدعاء 1:</strong> get_item_return_days("laptop") → 30 days</p>
+            <p><strong>استدعاء 2:</strong> get_item_return_days("mouse") → 15 days</p>
+          </div>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">5</span>
+          <strong>تجميع النتائج وصياغة الإجابة النهائية</strong>
+          <div class="result-box">
+            <h4>✅ الإجابة النهائية</h4>
+            <p><strong>سياسة الإرجاع للطلب 1001:</strong></p>
+            <ul>
+              <li>Laptop: 30 days للإرجاع</li>
+              <li>Mouse: 15 days للإرجاع</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="insights-box">
+        <h3>🎯 الدروس المستفادة من التجربة الأولى</h3>
+        <ul>
+          <li><strong>الذكاء في التخطيط:</strong> الـ Agent قدر يفهم إن السؤال محتاج خطوات متعددة</li>
+          <li><strong>استخراج المعاملات:</strong> نجح في استخراج رقم الطلب وأسماء المنتجات بدقة</li>
+          <li><strong>التنفيذ المنطقي:</strong> نفذ الخطوات بالترتيب الصحيح</li>
+          <li><strong>التجميع الذكي:</strong> جمع النتائج في إجابة واضحة ومنظمة</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🎭 التجربة الثانية: سؤال معقد متعدد الأجزاء</h2>
+
+      <div class="complex-scenario">
+        <h3>السيناريو الثاني</h3>
+        <div class="question-box">
+          <h4>❓ السؤال المركب</h4>
+          <p>"When is the delivery date and items shipped for order 1003, and how can I contact customer support?"</p>
+          <p><em>امتى تاريخ التسليم والمنتجات المشحونة للطلب 1003، وإزاي ممكن أتواصل مع الدعم؟</em></p>
+        </div>
+      </div>
+
+      <h3>تعقيدات السؤال</h3>
+      <div class="ai-thinking">
+        <h4>🧩 تحليل أجزاء السؤال</h4>
+        <p>السؤال ده فيه ثلاث أجزاء مختلفة:</p>
+        <ol>
+          <li><strong>المنتجات:</strong> إيه اللي موجود في الطلب؟</li>
+          <li><strong>تاريخ التسليم:</strong> امتى الطلب هيوصل؟</li>
+          <li><strong>معلومات التواصل:</strong> إزاي أتكلم مع الدعم؟</li>
+        </ol>
+      </div>
+
+      <h3>استراتيجية الـ Agent في التعامل</h3>
+
+      <div class="execution-steps">
+        <h3>خطوات التنفيذ المنظمة</h3>
+
+        <div class="pattern-highlight">
+          <h4>📋 Planning Pattern في العمل</h4>
+          <p>الـ LLM استخدم نمط التخطيط عشان يقسم السؤال الكبير لمهام فردية صغيرة وينفذها واحدة واحدة</p>
+        </div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">1</span>
+          <strong>جلب قائمة المنتجات</strong>
+          <div class="result-box">
+            <h4>📦 get_order_items(1003)</h4>
+            <p>حصل على قائمة المنتجات في الطلب رقم 1003</p>
+          </div>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">2</span>
+          <strong>معرفة تاريخ التسليم</strong>
+          <div class="result-box">
+            <h4>🚚 get_delivery_date(1003)</h4>
+            <p>حصل على تاريخ التسليم المتوقع للطلب</p>
+          </div>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">3</span>
+          <strong>البحث عن معلومات التواصل</strong>
+          <div class="result-box">
+            <h4>📞 query_engine_tool("customer service contact")</h4>
+            <p>استخدم أداة البحث في المستندات للحصول على معلومات التواصل مع الدعم</p>
+          </div>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">4</span>
+          <strong>تجميع الإجابة الشاملة</strong>
+          <div class="result-box">
+            <h4>✅ الإجابة المتكاملة</h4>
+            <p>جمع كل النتائج في إجابة واحدة تغطي كل أجزاء السؤال</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="note-box">
+        <h4>🔍 ملاحظة مهمة على RAG Tool</h4>
+        <p>المدرس لفت النظر لحاجة مهمة: الـ Agent مرر للـ query_engine_tool النص "customer service contact" كمدخل، ومش
+          المستند كله. ده يدل على ذكاء في تحديد الكلمات المفتاحية للبحث.</p>
+      </div>
+
+      <div class="insights-box">
+        <h3>🎯 مهارات الـ Agent في السؤال الثاني</h3>
+        <ul>
+          <li><strong>تقسيم المهام:</strong> قدر يفكك السؤال المعقد لمهام بسيطة</li>
+          <li><strong>تنويع الأدوات:</strong> استخدم ثلاث أدوات مختلفة في نفس السؤال</li>
+          <li><strong>البحث الذكي:</strong> عرف يبحث في المستندات بكلمات مفتاحية مناسبة</li>
+          <li><strong>التسلسل المنطقي:</strong> رتب الخطوات بشكل منطقي وفعال</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>❌ التجربة الثالثة: التعامل مع الأخطاء</h2>
+
+      <div class="error-scenario">
+        <h3>السيناريو الثالث: اختبار المقاومة</h3>
+        <div class="question-box">
+          <h4>❓ السؤال الخاطئ</h4>
+          <p>"What is the return policy for order number 1004?"</p>
+          <p><em>إيه سياسة الإرجاع للطلب رقم 1004؟</em></p>
+        </div>
+      </div>
+
+      <h3>الغرض من التجربة</h3>
+      <div class="ai-thinking">
+        <h4>🎯 هدف الاختبار</h4>
+        <p>المدرس عايز يشوف إزاي الـ Agent هيتعامل مع طلب رقمه مش موجود في النظام. ده اختبار مهم لأن العملاء الحقيقيين
+          ممكن يدخلوا بيانات غلط.</p>
+      </div>
+
+      <h3>استجابة الـ Agent للخطأ</h3>
+
+      <div class="execution-steps">
+        <h3>خطوات التعامل مع الخطأ</h3>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">1</span>
+          <strong>محاولة عادية للوصول للبيانات</strong>
+          <div class="ai-thinking">
+            <h4>🔄 نفس النهج المعتاد</h4>
+            <p>الـ Agent بدأ بنفس الطريقة وحاول يستدعي get_order_items(1004)</p>
+          </div>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">2</span>
+          <strong>اكتشاف عدم وجود نتائج</strong>
+          <div class="result-box">
+            <h4>⚠️ النتيجة المرجعة</h4>
+            <p>الوظيفة رجعت نتيجة فارغة (no results)، ده معناه إن الطلب مش موجود</p>
+          </div>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">3</span>
+          <strong>التعامل الذكي مع الخطأ</strong>
+          <div class="result-box">
+            <h4>✅ رسالة استثناء مفيدة</h4>
+            <p>الـ Agent مردش بخطأ تقني، بل قدم:</p>
+            <ul>
+              <li>رسالة توضح إن الطلب مش موجود</li>
+              <li>رسالة مساعدة بتقترح على العميل يسأل أسئلة تانية</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="insights-box">
+        <h3>🛡️ نقاط قوة في التعامل مع الأخطاء</h3>
+        <ul>
+          <li><strong>مقاومة الأخطاء:</strong> النظام ماعطلش أو اتعطل من الخطأ</li>
+          <li><strong>رسائل واضحة:</strong> فهم العميل إيه اللي حصل بوضوح</li>
+          <li><strong>إرشاد بناء:</strong> قدم اقتراحات للعميل لأسئلة تانية</li>
+          <li><strong>احترافية:</strong> تعامل مع الخطأ بطريقة مهنية ومساعدة</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🎓 الدروس المستفادة والتحليل الشامل</h2>
+
+      <div class="insights-box">
+        <h3>🧠 ما تعلمناه من التجارب</h3>
+        <p>المدرس لخص التجربة بقوله إن المثال ده مفيد جداً في فهم كيفية عمل الـ AI Agents. إحنا شفنا:</p>
+      </div>
+
+      <h3>أنماط الـ AI في العمل الفعلي</h3>
+
+      <div class="pattern-highlight">
+        <h4>📋 Planning Pattern</h4>
+        <ul>
+          <li>تقسيم الأهداف المعقدة لمهام فردية</li>
+          <li>ترتيب الخطوات بشكل منطقي</li>
+          <li>التكيف مع أنواع أسئلة مختلفة</li>
+        </ul>
+      </div>
+
+      <div class="pattern-highlight">
+        <h4>🛠️ Tool Use Pattern</h4>
+        <ul>
+          <li>اختيار الأداة المناسبة لكل مهمة</li>
+          <li>استخراج المعاملات الصحيحة</li>
+          <li>تنفيذ الأدوات بالتسلسل المطلوب</li>
+        </ul>
+      </div>
+
+      <h3>قدرات متقدمة لوحظت</h3>
+
+      <div class="note-box">
+        <h4>🎯 مهارات التحليل</h4>
+        <ul>
+          <li><strong>فهم السياق:</strong> فهم المقصود من كل سؤال</li>
+          <li><strong>استخراج المعلومات:</strong> تحديد الأرقام والمعاملات المطلوبة</li>
+          <li><strong>ربط النتائج:</strong> دمج معلومات من مصادر متعددة</li>
+          <li><strong>التواصل الواضح:</strong> تقديم إجابات مفهومة ومنظمة</li>
+        </ul>
+      </div>
+
+      <div class="note-box">
+        <h4>🛡️ التعامل مع التحديات</h4>
+        <ul>
+          <li><strong>البيانات المفقودة:</strong> تعامل احترافي مع الأخطاء</li>
+          <li><strong>الأسئلة المعقدة:</strong> تفكيك وتنظيم المهام</li>
+          <li><strong>أدوات متعددة:</strong> تنسيق استخدام أدوات مختلفة</li>
+          <li><strong>ذاكرة السياق:</strong> الحفاظ على السياق أثناء المعالجة</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🔮 الخطوات القادمة</h2>
+
+      <div class="overview-box">
+        <h3>📚 الفصل القادم</h3>
+        <p>المدرس أعلن إن الفصل الجاي هيناقش اعتبارات مهمة لبناء الـ AI Agents. بعد ما شفنا الـ Agent شغال عملياً،
+          هنتعلم النصائح والإرشادات المهمة.</p>
+      </div>
+
+      <div class="note-box">
+        <h4>🎯 ما نتوقعه في الفصل القادم</h4>
+        <ul>
+          <li>اعتبارات الأمان والخصوصية</li>
+          <li>تحسين الأداء والسرعة</li>
+          <li>التعامل مع الحالات الاستثنائية</li>
+          <li>أفضل الممارسات في التطوير</li>
+          <li>قياس وتقييم أداء الـ Agents</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>💡 نصائح للمطورين والشركات</h2>
+
+      <div class="note-box">
+        <h4>🛠️ للمطورين</h4>
+        <ul>
+          <li><strong>اختبار شامل:</strong> جرب سيناريوهات مختلفة زي اللي شفناها</li>
+          <li><strong>معالجة الأخطاء:</strong> خلي النظام يرد بطريقة مفيدة على الأخطاء</li>
+          <li><strong>مراقبة الأداء:</strong> استخدم الـ verbose mode للفهم والتحسين</li>
+          <li><strong>توثيق السلوك:</strong> سجل كيف الـ Agent بيتعامل مع حالات مختلفة</li>
+        </ul>
+      </div>
+
+      <div class="note-box">
+        <h4>🏢 للشركات</h4>
+        <ul>
+          <li><strong>تدريب الفريق:</strong> الفريق محتاج يفهم كيف الـ Agent بيفكر</li>
+          <li><strong>إعداد البيانات:</strong> تأكد إن البيانات صحيحة ومحدثة</li>
+          <li><strong>خطة للطوارئ:</strong> إعداد خطة للحالات اللي الـ Agent مش هيقدر يحلها</li>
+          <li><strong>تجربة المستخدم:</strong> اختبر النظام مع عملاء حقيقيين</li>
+        </ul>
+      </div>
+
+      <div class="note-box">
+        <h4>📊 للتقييم والتحسين</h4>
+        <ul>
+          <li><strong>قياس الدقة:</strong> نسبة الإجابات الصحيحة</li>
+          <li><strong>قياس السرعة:</strong> الوقت المطلوب للإجابة</li>
+          <li><strong>رضا العملاء:</strong> مدى مفيدية الإجابات</li>
+          <li><strong>التطوير المستمر:</strong> تحديث الأدوات والمعرفة باستمرار</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🎊 خلاصة الرحلة</h2>
+
+      <div class="insights-box">
+        <h3>🏆 ما حققناه</h3>
+        <p>من البداية لحد دلوقتي، بنينا Customer Service AI Agent كامل وشفناه شغال! الرحلة كانت:</p>
+        <ol>
+          <li><strong>التصميم:</strong> فهمنا مكونات النظام وإزاي هيشتغل</li>
+          <li><strong>التحضير:</strong> جهزنا الوظائف والفهارس</li>
+          <li><strong>التجميع:</strong> بنينا الـ Agent من الأدوات</li>
+          <li><strong>التجربة:</strong> اختبرنا النظام مع حالات مختلفة</li>
+        </ol>
+      </div>
+
+      <div class="overview-box">
+        <h3>🎯 القيمة الحقيقية</h3>
+        <p>التجربة دي أثبتت إن الـ AI Agents مش مجرد تقنية معقدة، بل أداة قوية وعملية ممكن تخدم العملاء بذكاء وكفاءة،
+          وتوفر خدمة 24/7 بجودة عالية.</p>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

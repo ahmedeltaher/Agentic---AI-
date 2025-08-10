@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إعداد الوظائف والفهارس - Customer Service AI Agent</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      line-height: 1.7;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      color: white;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .card h2 {
+      color: #2c3e50;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      border-bottom: 3px solid #e74c3c;
+      padding-bottom: 10px;
+    }
+
+    .card h3 {
+      color: #34495e;
+      font-size: 1.4rem;
+      margin: 25px 0 15px 0;
+      position: relative;
+    }
+
+    .card h3:before {
+      content: "🔹";
+      margin-left: 10px;
+    }
+
+    .card p {
+      color: #555;
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+    }
+
+    .card ul {
+      color: #555;
+      margin: 15px 0;
+      padding-right: 20px;
+    }
+
+    .card li {
+      margin-bottom: 10px;
+      font-size: 1.05rem;
+    }
+
+    .code-card {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      border: 2px solid #6c757d;
+      border-radius: 15px;
+      padding: 25px;
+      margin: 25px 0;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .code-card h3 {
+      color: #495057;
+      margin-bottom: 15px;
+      text-align: center;
+      direction: rtl;
+    }
+
+    .code-card pre {
+      background: #2d3748;
+      color: #e2e8f0;
+      padding: 20px;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .setup-overview {
+      background: linear-gradient(135deg, #e8f5e8, #d4edda);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border: 2px solid #28a745;
+    }
+
+    .setup-overview h3 {
+      color: #155724;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+
+    .llm-setup {
+      background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border: 2px solid #ffc107;
+    }
+
+    .llm-setup h3 {
+      color: #856404;
+      margin-bottom: 15px;
+    }
+
+    .function-box {
+      background: linear-gradient(135deg, #d1ecf1, #b3e5fc);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 15px 0;
+      border: 2px solid #17a2b8;
+    }
+
+    .function-box h4 {
+      color: #0c5460;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .implementation-steps {
+      background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border: 2px solid #9c27b0;
+    }
+
+    .implementation-steps h3 {
+      color: #4a148c;
+      margin-bottom: 15px;
+    }
+
+    .step-number {
+      background: #9c27b0;
+      color: white;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 10px;
+      font-weight: bold;
+    }
+
+    .warning-box {
+      background: linear-gradient(135deg, #ffebee, #ffcdd2);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+      border: 2px solid #f44336;
+    }
+
+    .warning-box h4 {
+      color: #c62828;
+      margin-bottom: 10px;
+    }
+
+    .note-box {
+      background: linear-gradient(135deg, #fff8e1, #ffecb3);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+      border: 2px solid #ff9800;
+    }
+
+    .note-box h4 {
+      color: #e65100;
+      margin-bottom: 10px;
+    }
+
+    .arrow {
+      text-align: center;
+      font-size: 2rem;
+      color: #6c757d;
+      margin: 20px 0;
+    }
+
+    .next-steps {
+      background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border: 2px solid #4caf50;
+    }
+
+    .next-steps h3 {
+      color: #2e7d32;
+      margin-bottom: 15px;
+    }
+
+    .notebook-reference {
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+      border: 2px solid #2196f3;
+      text-align: center;
+    }
+
+    .notebook-reference h4 {
+      color: #0d47a1;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>إعداد الوظائف والفهارس</h1>
+      <p>تنفيذ عملي لمكونات Customer Service AI Agent</p>
+    </div>
+
+    <div class="card">
+      <h2>📋 نظرة عامة على التنفيذ</h2>
+      <div class="setup-overview">
+        <h3>الهدف من الفيديو</h3>
+        <p>بعد ما اتكلمنا عن تصميم Customer Service Agent، دلوقتي جه وقت التنفيذ الفعلي! الفيديو ده هيركز على إعداد
+          الأساسيات اللي محتاجينها عشان الـ Agent يشتغل.</p>
+      </div>
+
+      <div class="notebook-reference">
+        <h4>📓 مرجع الكود</h4>
+        <p><strong>الملف:</strong> 06_XX implementing Agentic AI for customer service</p>
+        <p>كل الكود اللي هنشتغل عليه متوفر في الـ Notebook ده</p>
+      </div>
+
+      <p>المدرس بيوضح إن الفيديو ده هيغطي:</p>
+      <ul>
+        <li><strong>إعداد اللغة الذكية (LLM):</strong> تجهيز Azure OpenAI للاستخدام</li>
+        <li><strong>إنشاء الوظائف الثلاثة:</strong> اللي هتشكل أدوات الـ Agent</li>
+        <li><strong>إعداد الفهرس:</strong> للمستند الداعم customer_service.pdf</li>
+        <li><strong>تحضير محرك الاستعلام:</strong> للبحث في المستندات</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>🤖 إعداد نموذج اللغة الذكية (LLM)</h2>
+
+      <div class="llm-setup">
+        <h3>استخدام Azure OpenAI</h3>
+        <p>المدرس اختار Azure OpenAI كنموذج اللغة الأساسي، لكن وضح إنك ممكن تستخدم أي نموذج تاني بس لازم تغير الإعدادات
+          والوظائف المناسبة في LlamaIndex.</p>
+      </div>
+
+      <h3>المطلوب للإعداد</h3>
+      <div class="function-box">
+        <h4>🔑 البيانات الأساسية</h4>
+        <ul>
+          <li><strong>API Key:</strong> مفتاح الوصول لحسابك</li>
+          <li><strong>Azure Endpoint:</strong> عنوان الخدمة على Azure</li>
+          <li><strong>API Version:</strong> إصدار الـ API المستخدم</li>
+        </ul>
+        <p><strong>مهم جداً:</strong> لازم تستبدل القيم دي بالقيم من حسابك الشخصي!</p>
+      </div>
+
+      <div class="warning-box">
+        <h4>⚠️ تحذير مهم - اختيار النموذج</h4>
+        <p>المدرس نبه إن <strong>GPT-4 بس</strong> هو اللي بيدعم Function Calling في الـ API version المستخدم،
+          <strong>GPT-3.5 مش هيشتغل</strong> على Azure للمهمة دي!</p>
+      </div>
+
+      <h3>إعداد نموذج التضمين (Embedding)</h3>
+      <p>بالإضافة للـ LLM، هنحتاج نموذج embedding عشان نقدر نعالج مستند الدعم الفني ونحوله لفهرس قابل للبحث.</p>
+
+      <div class="note-box">
+        <h4>💡 ليه نحتاج Embedding Model؟</h4>
+        <p>النموذج ده مسؤول عن تحويل النصوص لأرقام (vectors) عشان الكمبيوتر يقدر يفهمها ويبحث فيها بسرعة ودقة.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>⚙️ إنشاء الوظائف الثلاثة</h2>
+
+      <div class="implementation-steps">
+        <h3>الوظائف المطلوبة</h3>
+        <p>هننشئ الثلاث وظائف اللي اتكلمنا عنهم في التصميم، وكل وظيفة هتستخدم قوائم مبرمجة مسبقاً لأغراض التوضيح.</p>
+      </div>
+
+      <div class="warning-box">
+        <h4>🏢 ملاحظة للتطبيق الحقيقي</h4>
+        <p>في التطبيقات الحقيقية، الوظائف دي مش هتستخدم قوائم ثابتة، بل هتتصل بقواعد البيانات الفعلية للشركة عشان تجيب
+          المعلومات الحديثة والدقيقة.</p>
+      </div>
+
+      <h3>الوظيفة الأولى: get_order_items</h3>
+      <div class="function-box">
+        <h4>📦 وظيفة عرض عناصر الطلب</h4>
+        <p><strong>المدخل:</strong> Order ID (رقم الطلب)</p>
+        <p><strong>العمل:</strong> تبحث في قائمة الطلبات المحفوظة</p>
+        <p><strong>المخرج:</strong> قائمة بكل المنتجات في الطلب ده</p>
+        <p><strong>الاستخدام:</strong> لما العميل يسأل "إيه اللي في طلبي؟"</p>
+      </div>
+
+      <h3>الوظيفة الثانية: get_delivery_date</h3>
+      <div class="function-box">
+        <h4>🚚 وظيفة معرفة تاريخ التسليم</h4>
+        <p><strong>المدخل:</strong> Order ID (رقم الطلب)</p>
+        <p><strong>العمل:</strong> تبحث في قائمة مواعيد التسليم المحفوظة</p>
+        <p><strong>المخرج:</strong> تاريخ التسليم المتوقع للطلب</p>
+        <p><strong>الاستخدام:</strong> لما العميل يسأل "امتى طلبي هيوصل؟"</p>
+      </div>
+
+      <h3>الوظيفة الثالثة: get_item_return_days</h3>
+      <div class="function-box">
+        <h4>↩️ وظيفة سياسة الإرجاع</h4>
+        <p><strong>المدخل:</strong> Item (اسم المنتج)</p>
+        <p><strong>العمل:</strong> تبحث في قائمة قيم الإرجاع المحفوظة</p>
+        <p><strong>المخرج:</strong> أقصى عدد أيام ممكن ترجع فيها المنتج</p>
+        <p><strong>الاستخدام:</strong> لما العميل يسأل "ممكن أرجع المنتج ده؟"</p>
+      </div>
+
+      <div class="note-box">
+        <h4>🎯 هدف استخدام البيانات المبرمجة</h4>
+        <p>المدرس استخدم بيانات مبرمجة مسبقاً (hard-coded) عشان الشرح يكون واضح ومباشر، ومش نتشتت في تفاصيل الاتصال
+          بقواعد البيانات في المرحلة دي.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📚 إعداد فهرس المستندات</h2>
+
+      <h3>استخدام ملف customer_service.pdf</h3>
+      <div class="function-box">
+        <h4>📄 المستند الداعم</h4>
+        <p><strong>المصدر:</strong> ملف customer_service.pdf الموجود في الـ repo</p>
+        <p><strong>الهدف:</strong> إنشاء فهرس قابل للبحث من محتوى المستند</p>
+        <p><strong>الاستخدام:</strong> للإجابة على أسئلة عامة عن سياسات الشركة</p>
+      </div>
+
+      <h3>خطوات معالجة المستند</h3>
+      <div class="implementation-steps">
+        <div style="margin: 20px 0;">
+          <span class="step-number">1</span>
+          <strong>رفع المستند</strong>
+          <p>قراءة ملف customer_service.pdf في النظام</p>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">2</span>
+          <strong>تقسيم المحتوى</strong>
+          <p>تكسير المستند لقطع صغيرة (chunks) عشان يكون أسهل في المعالجة</p>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">3</span>
+          <strong>إنشاء Embeddings</strong>
+          <p>تحويل كل قطعة لـ vector numbers باستخدام embedding model</p>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">4</span>
+          <strong>بناء الفهرس</strong>
+          <p>حفظ كل الـ vectors في index منظم للبحث السريع</p>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">5</span>
+          <strong>إنشاء Query Engine</strong>
+          <p>إنشاء محرك استعلام قادر على البحث في الفهرس والإجابة على الأسئلة</p>
+        </div>
+      </div>
+
+      <div class="note-box">
+        <h4>🔍 كيف يعمل Query Engine؟</h4>
+        <p>لما العميل يسأل سؤال، القطعة دي بتحول السؤال لـ embedding، وبعدين بتدور على أقرب chunks ليه في الفهرس،
+          وتستخدمها عشان تكون إجابة دقيقة ومفيدة.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🔄 تدفق العمل الكامل</h2>
+
+      <div class="implementation-steps">
+        <h3>ترتيب خطوات التنفيذ</h3>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">1</span>
+          <strong>إعداد Azure OpenAI</strong>
+          <p>تجهيز الـ API وإعداد GPT-4 مع embedding model</p>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">2</span>
+          <strong>إنشاء الوظائف الثلاثة</strong>
+          <p>كتابة functions للطلبات والتسليم والإرجاع</p>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">3</span>
+          <strong>معالجة المستند</strong>
+          <p>تحضير customer_service.pdf وإنشاء الفهرس</p>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">4</span>
+          <strong>بناء Query Engine</strong>
+          <p>إنشاء محرك البحث للمستندات</p>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">5</span>
+          <strong>التحضير للـ Agent</strong>
+          <p>كل الأدوات جاهزة للتجميع في الفيديو القادم</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>💡 نصائح تقنية مهمة</h2>
+
+      <div class="warning-box">
+        <h4>🔐 أمان المفاتيح</h4>
+        <ul>
+          <li>متحطش الـ API keys في الكود مباشرة</li>
+          <li>استخدم متغيرات البيئة (environment variables)</li>
+          <li>خلي المفاتيح في ملف منفصل ومش مرفوع على Git</li>
+        </ul>
+      </div>
+
+      <div class="note-box">
+        <h4>⚡ تحسين الأداء</h4>
+        <ul>
+          <li>اختبر كل function لوحدها قبل التجميع</li>
+          <li>تأكد إن الـ embedding model شغال صح</li>
+          <li>جرب Query Engine مع أسئلة مختلفة</li>
+          <li>راقب سرعة الاستجابة والدقة</li>
+        </ul>
+      </div>
+
+      <div class="function-box">
+        <h4>🛠️ استكشاف الأخطاء</h4>
+        <ul>
+          <li>لو GPT-3.5 مش شغال، تأكد إنك مستخدم GPT-4</li>
+          <li>راجع إعدادات الـ API version</li>
+          <li>تأكد إن الملف customer_service.pdf موجود ومقروء</li>
+          <li>اختبر كل وظيفة بمدخلات مختلفة</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🎯 ملخص المحققات</h2>
+
+      <div class="setup-overview">
+        <h3>ما تم إنجازه في هذا الفيديو</h3>
+        <ul>
+          <li>✅ <strong>إعداد Azure OpenAI:</strong> تجهيز GPT-4 مع Function Calling</li>
+          <li>✅ <strong>إنشاء embedding model:</strong> لمعالجة المستندات</li>
+          <li>✅ <strong>وظيفة get_order_items:</strong> لعرض محتويات الطلبات</li>
+          <li>✅ <strong>وظيفة get_delivery_date:</strong> لمعرفة مواعيد التسليم</li>
+          <li>✅ <strong>وظيفة get_item_return_days:</strong> لسياسات الإرجاع</li>
+          <li>✅ <strong>معالجة customer_service.pdf:</strong> إنشاء فهرس قابل للبحث</li>
+          <li>✅ <strong>Query Engine:</strong> محرك البحث في المستندات</li>
+        </ul>
+      </div>
+
+      <div class="next-steps">
+        <h3>🔮 الخطوة القادمة</h3>
+        <p>في الفيديو الجاي، هنجمع كل الأدوات دي ونبني الـ Customer Service Agent الكامل اللي هيقدر يستخدم كل هذه
+          الوظائف بذكاء للإجابة على أسئلة العملاء.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📝 نصائح للتطبيق العملي</h2>
+
+      <div class="note-box">
+        <h4>🏢 للشركات الحقيقية</h4>
+        <ul>
+          <li>اربط الوظائف بقواعد البيانات الفعلية</li>
+          <li>استخدم أنظمة إدارة الطلبات الموجودة</li>
+          <li>حدّث المستندات الداعمة بانتظام</li>
+          <li>اعمل backup للفهارس المنشأة</li>
+        </ul>
+      </div>
+
+      <div class="note-box">
+        <h4>⚙️ للمطورين</h4>
+        <ul>
+          <li>اعمل error handling مناسب لكل وظيفة</li>
+          <li>استخدم logging لتتبع الأداء</li>
+          <li>اختبر مع بيانات كتيرة ومتنوعة</li>
+          <li>حسّن من سرعة البحث في الفهرس</li>
+        </ul>
+      </div>
+
+      <div class="note-box">
+        <h4>🔍 للاختبار والتطوير</h4>
+        <ul>
+          <li>اختبر كل وظيفة مع cases مختلفة</li>
+          <li>جرب أسئلة معقدة على الـ Query Engine</li>
+          <li>راقب دقة النتائج وسرعة الاستجابة</li>
+          <li>اجمع feedback من المستخدمين</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

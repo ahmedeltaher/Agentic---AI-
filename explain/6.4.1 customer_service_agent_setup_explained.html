@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إعداد Customer Service AI Agent - التجميع النهائي</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      line-height: 1.7;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      color: white;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .card h2 {
+      color: #2c3e50;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      border-bottom: 3px solid #e74c3c;
+      padding-bottom: 10px;
+    }
+
+    .card h3 {
+      color: #34495e;
+      font-size: 1.4rem;
+      margin: 25px 0 15px 0;
+      position: relative;
+    }
+
+    .card h3:before {
+      content: "🔹";
+      margin-left: 10px;
+    }
+
+    .card p {
+      color: #555;
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+    }
+
+    .card ul {
+      color: #555;
+      margin: 15px 0;
+      padding-right: 20px;
+    }
+
+    .card li {
+      margin-bottom: 10px;
+      font-size: 1.05rem;
+    }
+
+    .overview-box {
+      background: linear-gradient(135deg, #e8f5e8, #d4edda);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border: 2px solid #28a745;
+    }
+
+    .overview-box h3 {
+      color: #155724;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+
+    .tools-container {
+      background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border: 2px solid #ffc107;
+    }
+
+    .tools-container h3 {
+      color: #856404;
+      margin-bottom: 15px;
+    }
+
+    .tool-item {
+      background: linear-gradient(135deg, #d1ecf1, #b3e5fc);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 15px 0;
+      border: 2px solid #17a2b8;
+    }
+
+    .tool-item h4 {
+      color: #0c5460;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .agent-architecture {
+      background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border: 2px solid #9c27b0;
+    }
+
+    .agent-architecture h3 {
+      color: #4a148c;
+      margin-bottom: 15px;
+    }
+
+    .step-number {
+      background: #9c27b0;
+      color: white;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 10px;
+      font-weight: bold;
+    }
+
+    .component-explanation {
+      background: linear-gradient(135deg, #ffebee, #ffcdd2);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+      border: 2px solid #f44336;
+    }
+
+    .component-explanation h4 {
+      color: #c62828;
+      margin-bottom: 10px;
+    }
+
+    .note-box {
+      background: linear-gradient(135deg, #fff8e1, #ffecb3);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+      border: 2px solid #ff9800;
+    }
+
+    .note-box h4 {
+      color: #e65100;
+      margin-bottom: 10px;
+    }
+
+    .arrow {
+      text-align: center;
+      font-size: 2rem;
+      color: #6c757d;
+      margin: 20px 0;
+    }
+
+    .final-setup {
+      background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border: 2px solid #4caf50;
+    }
+
+    .final-setup h3 {
+      color: #2e7d32;
+      margin-bottom: 15px;
+    }
+
+    .workflow-diagram {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      padding: 30px;
+      border-radius: 15px;
+      margin: 25px 0;
+      text-align: center;
+      border: 2px solid #6c757d;
+    }
+
+    .verbose-explanation {
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+      border: 2px solid #2196f3;
+    }
+
+    .verbose-explanation h4 {
+      color: #0d47a1;
+      margin-bottom: 10px;
+    }
+
+    .next-video {
+      background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border: 2px solid #9c27b0;
+      text-align: center;
+    }
+
+    .next-video h3 {
+      color: #4a148c;
+      margin-bottom: 15px;
+    }
+
+    .interface-box {
+      background: linear-gradient(135deg, #e8f5e8, #d4edda);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 15px 0;
+      border: 2px solid #28a745;
+    }
+
+    .interface-box h4 {
+      color: #155724;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>إعداد Customer Service AI Agent</h1>
+      <p>التجميع النهائي لبناء الوكيل الذكي لخدمة العملاء</p>
+    </div>
+
+    <div class="card">
+      <h2>🎯 نظرة عامة على المرحلة النهائية</h2>
+      <div class="overview-box">
+        <h3>الهدف من الفيديو</h3>
+        <p>دلوقتي جه الوقت إننا نجمع كل الحاجات اللي عملناها في الفيديو اللي فات ونبني الـ Customer Service AI Agent
+          الكامل! هنبدأ من الوظائف والـ query engine اللي جهزناهم ونحولهم لـ agent شغال.</p>
+      </div>
+
+      <p>المدرس بيوضح إن المرحلة دي هتتكون من خطوات محددة:</p>
+      <ul>
+        <li><strong>تحويل الوظائف لأدوات:</strong> استخدام Function Tool Interface</li>
+        <li><strong>إنشاء Query Engine Tool:</strong> للبحث في المستندات</li>
+        <li><strong>بناء Agent Worker:</strong> محرك تنفيذ المهام</li>
+        <li><strong>إنشاء Agent Runner:</strong> الواجهة النهائية للـ Agent</li>
+      </ul>
+
+      <div class="note-box">
+        <h4>💡 ترابط المراحل</h4>
+        <p>الفيديو ده بيبني على كل اللي عملناه قبل كده - الوظائف الثلاثة ومعالجة المستند - ويجمعهم في نظام واحد متكامل.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🛠️ إنشاء الأدوات من الوظائف</h2>
+
+      <div class="tools-container">
+        <h3>استخدام Function Tool Interface</h3>
+        <p>المدرس بيستخدم Function Tool Interface الموجود في LlamaIndex عشان يحول كل وظيفة من الوظائف الثلاثة لأداة
+          قابلة للاستخدام في الـ Agent.</p>
+      </div>
+
+      <h3>الأدوات الثلاثة الأساسية</h3>
+
+      <div class="tool-item">
+        <h4>🛒 Order Items Tool</h4>
+        <p><strong>مبنية على:</strong> get_order_items() function</p>
+        <p><strong>الوظيفة:</strong> تجيب قائمة المنتجات لأي رقم طلب</p>
+        <p><strong>طريقة التحويل:</strong> تغليف الـ function في Function Tool Interface</p>
+      </div>
+
+      <div class="tool-item">
+        <h4>🚚 Delivery Date Tool</h4>
+        <p><strong>مبنية على:</strong> get_delivery_date() function</p>
+        <p><strong>الوظيفة:</strong> ترجع تاريخ التسليم المتوقع</p>
+        <p><strong>طريقة التحويل:</strong> استخدام نفس الـ Interface لتحويلها لأداة</p>
+      </div>
+
+      <div class="tool-item">
+        <h4>↩️ Return Policy Tool</h4>
+        <p><strong>مبنية على:</strong> get_item_return_days() function</p>
+        <p><strong>الوظيفة:</strong> تحدد فترة الإرجاع المسموحة</p>
+        <p><strong>طريقة التحويل:</strong> تطبيق نفس النمط لإنشاء الأداة</p>
+      </div>
+
+      <h3>الأداة الرابعة: Query Engine Tool</h3>
+
+      <div class="tool-item">
+        <h4>📚 Support Query Engine Tool</h4>
+        <p><strong>مبنية على:</strong> الـ query engine اللي عملناه للـ customer_service.pdf</p>
+        <p><strong>الوظيفة:</strong> البحث في مستندات الدعم الفني</p>
+        <p><strong>طريقة الإنشاء:</strong> تحويل الـ query engine لأداة قابلة للاستخدام</p>
+      </div>
+
+      <div class="component-explanation">
+        <h4>🔍 ليه نحتاج تحويل لأدوات؟</h4>
+        <p>الـ Agent مش بيتعامل مع الـ functions مباشرة، بل محتاج يفهم إزاي يستدعي كل وظيفة ومتى يستخدمها. الـ Tools
+          بتوفر له الواجهة المناسبة لده.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>⚙️ بناء Agent Worker</h2>
+
+      <div class="agent-architecture">
+        <h3>فهم مفهوم Agent Worker</h3>
+        <p>المدرس بيوضح إن الـ Agent Worker في LlamaIndex بيكافئ الـ Task Executor اللي اتكلمنا عنه في مفاهيم الـ
+          Agentic AI.</p>
+      </div>
+
+      <h3>مكونات الـ Agent Worker</h3>
+
+      <div class="interface-box">
+        <h4>📋 المطلوب لإنشاء Agent Worker</h4>
+        <ul>
+          <li><strong>قائمة الأدوات:</strong> الأربع أدوات اللي جهزناهم</li>
+          <li><strong>نموذج اللغة (LLM):</strong> GPT-4 اللي جهزناه قبل كده</li>
+          <li><strong>إعدادات إضافية:</strong> زي مستوى التفصيل (verbose)</li>
+        </ul>
+      </div>
+
+      <div class="verbose-explanation">
+        <h4>👁️ إعداد Verbose Level</h4>
+        <p>المدرس حط الـ verbose level على true عشان نقدر نشوف إزاي الـ Agent بيفكر ويتخذ قراراته داخلياً. ده مفيد جداً
+          للفهم والـ debugging.</p>
+        <p><strong>فائدته:</strong> نشوف كل خطوة بيعملها الـ Agent وإزاي بيختار الأداة المناسبة لكل سؤال.</p>
+      </div>
+
+      <div class="component-explanation">
+        <h4>🧠 دور الـ Agent Worker</h4>
+        <p>الـ Agent Worker هو المسؤول عن:</p>
+        <ul>
+          <li>فهم السؤال أو الطلب من العميل</li>
+          <li>تحديد الأداة أو الأدوات المناسبة</li>
+          <li>تنفيذ المهمة باستخدام الأدوات المختارة</li>
+          <li>تجميع النتائج وصياغة الإجابة النهائية</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🏃‍♂️ إنشاء Agent Runner</h2>
+
+      <div class="final-setup">
+        <h3>الخطوة الأخيرة: Agent Runner</h3>
+        <p>بعد ما عملنا الـ Agent Worker، المدرس بيستخدم Agent Runner Interface في LlamaIndex عشان ينشئ الواجهة النهائية
+          للـ Agent.</p>
+      </div>
+
+      <h3>دور الـ Agent Runner</h3>
+
+      <div class="interface-box">
+        <h4>🎯 وظيفة Agent Runner</h4>
+        <p>الـ Agent Runner بيمثل الواجهة الخارجية اللي المستخدمين هيتعاملوا معاها. هو بياخد الـ Agent Worker كمعطى
+          ويوفر طرق سهلة للتفاعل مع الـ Agent.</p>
+      </div>
+
+      <div class="workflow-diagram">
+        <h3>العلاقة بين المكونات</h3>
+        <p><strong>Agent Runner ← Agent Worker ← Tools ← Functions</strong></p>
+        <p>كل طبقة بتبني على اللي قبلها وتضيف لها إمكانيات جديدة</p>
+      </div>
+
+      <div class="note-box">
+        <h4>🔄 تدفق العمل</h4>
+        <p>المستخدم يتكلم مع الـ Agent Runner، اللي بيمرر الطلب للـ Agent Worker، اللي بدوره يستخدم الأدوات المناسبة
+          عشان يجيب المعلومات ويرجع الإجابة.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📊 ملخص العملية الكاملة</h2>
+
+      <div class="agent-architecture">
+        <h3>خطوات البناء النهائية</h3>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">1</span>
+          <strong>إنشاء الأدوات</strong>
+          <p>تحويل الثلاث functions + query engine لأربع أدوات</p>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">2</span>
+          <strong>بناء Agent Worker</strong>
+          <p>تجميع الأدوات مع LLM في محرك تنفيذ</p>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">3</span>
+          <strong>إنشاء Agent Runner</strong>
+          <p>توفير واجهة نهائية للتفاعل مع الـ Agent</p>
+        </div>
+
+        <div class="arrow">⬇️</div>
+
+        <div style="margin: 20px 0;">
+          <span class="step-number">4</span>
+          <strong>الـ Agent جاهز!</strong>
+          <p>النظام كامل ومستعد لاستقبال أسئلة العملاء</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🔍 فهم آلية العمل الداخلية</h2>
+
+      <div class="component-explanation">
+        <h4>🧠 كيف يفكر الـ Agent؟</h4>
+        <p>لما العميل يسأل سؤال، الـ Agent بيعدي بالخطوات دي:</p>
+        <ol>
+          <li><strong>فهم السؤال:</strong> تحليل النص وفهم المطلوب</li>
+          <li><strong>تحديد الأدوات:</strong> اختيار الأداة أو الأدوات المناسبة</li>
+          <li><strong>تنفيذ المهمة:</strong> استدعاء الأدوات بالمعطيات الصحيحة</li>
+          <li><strong>تجميع النتائج:</strong> ربط المعلومات من أدوات مختلفة لو لزم الأمر</li>
+          <li><strong>صياغة الإجابة:</strong> تقديم رد واضح ومفيد للعميل</li>
+        </ol>
+      </div>
+
+      <div class="verbose-explanation">
+        <h4>👀 فوائد الـ Verbose Mode</h4>
+        <p>مع تفعيل الـ verbose، هنقدر نشوف:</p>
+        <ul>
+          <li>إيه الأداة اللي الـ Agent اختارها</li>
+          <li>إيه المعطيات اللي مررها للأداة</li>
+          <li>إيه النتيجة اللي رجعت من كل أداة</li>
+          <li>إزاي جمع المعلومات وكون الإجابة النهائية</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🎯 أمثلة على سيناريوهات العمل</h2>
+
+      <div class="tool-item">
+        <h4>📞 سيناريو: سؤال بسيط</h4>
+        <p><strong>العميل:</strong> "إيه اللي في طلبي رقم 123؟"</p>
+        <p><strong>الـ Agent:</strong> هيستخدم Order Items Tool بس</p>
+        <p><strong>النتيجة:</strong> قائمة بكل منتجات الطلب</p>
+      </div>
+
+      <div class="tool-item">
+        <h4>🔍 سيناريو: سؤال معقد</h4>
+        <p><strong>العميل:</strong> "طلبي رقم 456 فيه إيه وامتى هيوصل وممكن أرجع حاجة منه؟"</p>
+        <p><strong>الـ Agent:</strong> هيستخدم تلات أدوات: Order Items + Delivery Date + Return Policy</p>
+        <p><strong>النتيجة:</strong> إجابة شاملة تغطي كل الأسئلة</p>
+      </div>
+
+      <div class="tool-item">
+        <h4>❓ سيناريو: سؤال عام</h4>
+        <p><strong>العميل:</strong> "إيه سياسة الشحن في الشركة؟"</p>
+        <p><strong>الـ Agent:</strong> هيستخدم Support Query Engine Tool</p>
+        <p><strong>النتيجة:</strong> معلومات من مستند customer_service.pdf</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🔮 الخطوة القادمة</h2>
+
+      <div class="next-video">
+        <h3>🎬 الفيديو القادم: التجربة العملية</h3>
+        <p>المدرس وضح إن الفيديو الجاي هيركز على تجربة الـ Agent مع أهداف وأسئلة مختلفة عشان نشوف إزاي بيشتغل في الواقع.
+        </p>
+      </div>
+
+      <div class="note-box">
+        <h4>🎯 ما نتوقعه في الفيديو القادم</h4>
+        <ul>
+          <li>تجربة أسئلة مختلفة على الـ Agent</li>
+          <li>مراقبة كيفية اختيار الأدوات</li>
+          <li>تحليل جودة ودقة الإجابات</li>
+          <li>استكشاف حالات معقدة ومتعددة الأدوات</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>💡 نصائح للمطورين</h2>
+
+      <div class="note-box">
+        <h4>🛠️ أفضل الممارسات</h4>
+        <ul>
+          <li><strong>اختبار تدريجي:</strong> اختبر كل أداة لوحدها قبل التجميع</li>
+          <li><strong>استخدام Verbose:</strong> فعل الـ verbose mode أثناء التطوير</li>
+          <li><strong>معالجة الأخطاء:</strong> حط error handling مناسب لكل أداة</li>
+          <li><strong>مراقبة الأداء:</strong> تتبع سرعة ودقة كل أداة</li>
+        </ul>
+      </div>
+
+      <div class="note-box">
+        <h4>🔍 نصائح التصحيح</h4>
+        <ul>
+          <li>لو الـ Agent مش بيختار الأداة الصح، راجع وصف الأدوات</li>
+          <li>لو النتائج مش دقيقة، اختبر الـ functions الأساسية</li>
+          <li>لو Query Engine مش بيرجع نتائج كويسة، راجع الفهرس</li>
+          <li>استخدم الـ verbose logs عشان تفهم مسار التفكير</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🎉 ملخص الإنجاز</h2>
+
+      <div class="final-setup">
+        <h3>✅ ما تم تحقيقه</h3>
+        <ul>
+          <li>✅ <strong>تحويل الوظائف لأدوات:</strong> 3 أدوات من الـ functions</li>
+          <li>✅ <strong>إنشاء Query Engine Tool:</strong> للبحث في المستندات</li>
+          <li>✅ <strong>بناء Agent Worker:</strong> محرك التنفيذ بـ 4 أدوات</li>
+          <li>✅ <strong>إنشاء Agent Runner:</strong> الواجهة النهائية</li>
+          <li>✅ <strong>تفعيل Verbose Mode:</strong> لمراقبة العمليات الداخلية</li>
+          <li>✅ <strong>الـ Agent جاهز للاستخدام!</strong></li>
+        </ul>
+      </div>
+
+      <div class="overview-box">
+        <h3>🏆 النتيجة النهائية</h3>
+        <p>دلوقتي عندنا Customer Service AI Agent كامل وجاهز للعمل، قادر على استقبال أسئلة العملاء واستخدام الأدوات
+          المناسبة لتقديم إجابات دقيقة وشاملة!</p>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

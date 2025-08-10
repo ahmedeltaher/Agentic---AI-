@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,7 +34,7 @@
         .header h1 {
             font-size: 2.2rem;
             margin-bottom: 8px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .header p {
@@ -46,10 +47,9 @@
             border-radius: 15px;
             padding: 25px;
             margin-bottom: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .card h2 {
@@ -126,11 +126,25 @@
             line-height: 1.4;
         }
 
-        .python { color: #66d9ef; }
-        .string { color: #a6e22e; }
-        .comment { color: #75715e; }
-        .keyword { color: #f92672; }
-        .function { color: #a6e22e; }
+        .python {
+            color: #66d9ef;
+        }
+
+        .string {
+            color: #a6e22e;
+        }
+
+        .comment {
+            color: #75715e;
+        }
+
+        .keyword {
+            color: #f92672;
+        }
+
+        .function {
+            color: #a6e22e;
+        }
 
         .workflow-diagram {
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
@@ -194,15 +208,19 @@
         }
 
         @media (max-width: 768px) {
-            .agents-grid, .tools-grid {
+
+            .agents-grid,
+            .tools-grid {
                 grid-template-columns: 1fr;
             }
+
             .card {
                 padding: 18px;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
@@ -213,7 +231,7 @@
         <div class="card">
             <h2>📋 نظرة عامة على التطبيقات</h2>
             <p>مجال التأمين فيه عمليات معقدة كتير AI Agents تقدر تساعد فيها بشكل كبير.</p>
-            
+
             <div class="agents-grid">
                 <div class="agent-card">
                     <h4>🔍 كشف الاحتيال</h4>
@@ -340,7 +358,7 @@
 
         <div class="card">
             <h2>🔄 سير العمل المتكامل</h2>
-            
+
             <div class="workflow-diagram">
                 <div class="workflow-step">تحليل المطالبة</div>
                 <div class="workflow-step">كشف الاحتيال</div>
@@ -373,4 +391,5 @@
         </div>
     </div>
 </body>
+
 </html>
