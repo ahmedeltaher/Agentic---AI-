@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شرح Routing with Agentic AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .card-title {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #e67e22;
+            padding-bottom: 10px;
+        }
+
+        .card-content {
+            line-height: 1.8;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .code-card {
+            background: #2c3e50;
+            color: #ecf0f1;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .code-card pre {
+            overflow-x: auto;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ff9f43 0%, #feca57 100%);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .process-step {
+            background: #f8f9fa;
+            border-left: 5px solid #e67e22;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .important-note {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .important-note::before {
+            content: "💡 ";
+            font-size: 1.5rem;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .example-item {
+            background: #e8f5e8;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #27ae60;
+        }
+
+        .arabic-text {
+            direction: rtl;
+            text-align: right;
+        }
+
+        .ltr-text {
+            direction: ltr;
+            text-align: left;
+        }
+
+        .routing-demo {
+            background: linear-gradient(45deg, #e67e22, #d35400);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .demo-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .demo-step {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 150px;
+            flex: 1;
+            backdrop-filter: blur(10px);
+        }
+
+        .arrow-flow {
+            font-size: 1.5rem;
+            color: #fdcb6e;
+        }
+
+        .query-analysis {
+            background: #00b894;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .query-box {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #fdcb6e;
+        }
+
+        .engine-selection {
+            background: #6c5ce7;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .engine-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .engine-card {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .verbose-mode {
+            background: #fd79a8;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .verbose-output {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .comparison-section {
+            background: #a29bfe;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 15px 0;
+        }
+
+        .comparison-item {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .results-showcase {
+            background: linear-gradient(45deg, #00cec9, #55a3ff);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .result-box {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #fdcb6e;
+        }
+
+        .tips-section {
+            background: #74b9ff;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .tips-section ul {
+            margin: 15px 0;
+            padding-right: 20px;
+        }
+
+        .tips-section li {
+            margin: 10px 0;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 شرح Routing with Agentic AI</h1>
+            <p>تطبيق عملي لنمط التوجيه مع محركات استعلام AeroFlow و EcoSprint</p>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">🎯 إيه هو Routing في العمل؟</h2>
+            <div class="card-content arabic-text">
+                <p>بعد ما اتكلمنا عن Router Pattern نظرياً، دلوقتي هنشوف إزاي بيشتغل في الواقع! هنجرب Router حقيقي مع محركات استعلام مختلفة ونشوف إزاي بيختار المحرك المناسب لكل سؤال.</p>
+                
+                <br>
+                
+                <p>هنستخدم <span class="highlight">query function</span> في Router Agent ونمرر له أسئلة مختلفة، وهنشوف إزاي بيحلل السؤال ويوجهه للمحرك الصحيح.</p>
+                
+                <br>
+                
+                <p>الجميل إننا هنفعل <span class="highlight">verbose mode</span> علشان Router يشرح لنا قراراته وأسباب اختياراته!</p>
+
+                <div class="routing-demo">
+                    <h3>🔬 التجربة العملية</h3>
+                    <div class="demo-steps">
+                        <div class="demo-step">
+                            <strong>السؤال الأول</strong>
+                            <p>"إيه ألوان AeroFlow؟"</p>
+                        </div>
+                        <div class="arrow-flow">➡️</div>
+                        <div class="demo-step">
+                            <strong>التحليل</strong>
+                            <p>Router يحلل السؤال</p>
+                        </div>
+                        <div class="arrow-flow">➡️</div>
+                        <div class="demo-step">
+                            <strong>الاختيار</strong>
+                            <p>AeroFlow Engine</p>
+                        </div>
+                        <div class="arrow-flow">➡️</div>
+                        <div class="demo-step">
+                            <strong>النتيجة</strong>
+                            <p>coastal blue, sunset orange, pearl white</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">🔍 السؤال الأول: ألوان AeroFlow</h2>
+            <div class="card-content arabic-text">
+                <p>نبدأ بسؤال بسيط وواضح: "إيه الألوان المتاحة لـ AeroFlow؟"</p>
+
+                <div class="query-analysis">
+                    <h3>🧠 تحليل Router للسؤال</h3>
+                    <div class="query-box">
+                        <strong>السؤال:</strong> "What colors are available for AeroFlow?"
+                    </div>
+                    <div class="query-box">
+                        <strong>الكلمة المفتاحية:</strong> "AeroFlow" - واضحة ومحددة
+                    </div>
+                    <div class="query-box">
+                        <strong>نوع الاستفسار:</strong> طلب معلومات عن خصائص المنتج
+                    </div>
+                </div>
+
+                <div class="engine-selection">
+                    <h3>⚙️ عملية اختيار المحرك</h3>
+                    <div class="engine-grid">
+                        <div class="engine-card">
+                            <strong>🎯 AeroFlow Engine</strong>
+                            <p>الوصف يذكر AeroFlow بوضوح</p>
+                            <p style="color: #00ff88;">✅ تم الاختيار</p>
+                        </div>
+                        <div class="engine-card">
+                            <strong>🌱 EcoSprint Engine</strong>
+                            <p>الوصف يذكر EcoSprint</p>
+                            <p style="color: #ff6b6b;">❌ غير مناسب</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <strong>خطوة 1:</strong> Router يستقبل السؤال عبر query function
+                </div>
+
+                <div class="process-step">
+                    <strong>خطوة 2:</strong> يحلل النص ويجد كلمة "AeroFlow"
+                </div>
+
+                <div class="process-step">
+                    <strong>خطوة 3:</strong> يقارن بأوصاف المحركات المتاحة
+                </div>
+
+                <div class="process-step">
+                    <strong>خطوة 4:</strong> يختار AeroFlow Engine لأن وصفه يذكر AeroFlow
+                </div>
+
+                <div class="process-step">
+                    <strong>خطوة 5:</strong> يرسل السؤال للمحرك المختار
+                </div>
+
+                <div class="process-step">
+                    <strong>خطوة 6:</strong> يسترجع المعلومات من فهرس AeroFlow
+                </div>
+
+                <div class="process-step">
+                    <strong>خطوة 7:</strong> يرجع المعلومات للـ LLM لتكوين الإجابة
+                </div>
+
+                <div class="important-note">
+                    <strong>دور الوصف الدقيق:</strong> الوصف اللي كتبناه لما عملنا الـ tool ساعد الـ LLM ياخد القرار الصحيح تلقائياً!
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">🎤 Verbose Mode: شرح Router لقراراته</h2>
+            <div class="card-content arabic-text">
+                <p>لما نفعل verbose mode، Router بيشرح لنا بالتفصيل إيه اللي بيحصل جواه:</p>
+
+                <div class="verbose-mode">
+                    <h3>🗣️ شرح Router بصوته</h3>
+                    <div class="verbose-output">
+                        <strong>Router Analysis:</strong><br>
+                        "I need to answer a question about AeroFlow colors.<br>
+                        Looking at available engines:<br>
+                        - AeroFlow Engine: mentions AeroFlow in description ✓<br>
+                        - EcoSprint Engine: mentions EcoSprint, not relevant ✗<br>
+                        <br>
+                        Decision: Routing to AeroFlow Engine<br>
+                        Reason: Query contains 'AeroFlow' which matches engine profile"
+                    </div>
+                    
+                    <p style="margin-top: 15px;">ده بالضبط اللي بيحصل جوا Router! هو بيفكر بصوت عالي ويشرح ليه اختار محرك معين.</p>
+                </div>
+
+                <div class="examples-grid">
+                    <div class="example-item">
+                        <strong>🔍 التحليل المنطقي</strong>
+                        <p>Router بيحلل السؤال خطوة بخطوة</p>
+                    </div>
+                    <div class="example-item">
+                        <strong>📋 مقارنة الخيارات</strong>
+                        <p>يقارن كل المحركات المتاحة</p>
+                    </div>
+                    <div class="example-item">
+                        <strong>✅ قرار مبرر</strong>
+                        <p>يديك سبب واضح لاختياره</p>
+                    </div>
+                    <div class="example-item">
+                        <strong>🎯 دقة عالية</strong>
+                        <p>يختار الخيار الأنسب للسؤال</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">💻 الكود العملي: Router مع AeroFlow و EcoSprint</h2>
+            <div class="card-content arabic-text">
+                <p>ده الكود الفعلي اللي بيوضح إزاي Router بيشتغل مع محركات الاستعلام:</p>
+            </div>
+            
+            <div class="code-card">
+                <pre>
+from llama_index.core.agent import ReActAgent
+from llama_index.core.tools import QueryEngineTool
+from llama_index.core import VectorStoreIndex, Document
+from llama_index.llms.openai import OpenAI
+
+# Setup LLM with verbose mode enabled
+llm = OpenAI(model="gpt-4", temperature=0)
+
+# AeroFlow product documents
+aeroflow_docs = [
+    Document(text="AeroFlow is available in coastal blue, sunset orange, and pearl white colors."),
+    Document(text="AeroFlow features advanced aerodynamic design for maximum performance."),
+    Document(text="AeroFlow pricing starts at $299 for basic model, $499 for premium."),
+    Document(text="AeroFlow comes with 5-year warranty and free shipping.")
+]
+
+# EcoSprint product documents  
+ecosprint_docs = [
+    Document(text="EcoSprint comes in forest green, earth brown, and sky blue colors."),
+    Document(text="EcoSprint is made from 100% recycled materials for sustainability."),
+    Document(text="EcoSprint is priced at $199 standard, $349 for deluxe version."),
+    Document(text="EcoSprint includes 3-year warranty and carbon-neutral shipping.")
+]
+
+# Create vector indexes
+print("📚 Creating vector indexes...")
+aeroflow_index = VectorStoreIndex.from_documents(aeroflow_docs)
+ecosprint_index = VectorStoreIndex.from_documents(ecosprint_docs)
+
+# Create query engines
+aeroflow_engine = aeroflow_index.as_query_engine()
+ecosprint_engine = ecosprint_index.as_query_engine()
+print("⚙️ Query engines created successfully!")
+
+# Create router tools with detailed descriptions
+aeroflow_tool = QueryEngineTool.from_defaults(
+    query_engine=aeroflow_engine,
+    name="aeroflow_query_engine",
+    description=(
+        "Use this tool to answer questions about AeroFlow product. "
+        "This tool contains information about AeroFlow colors, pricing, "
+        "features, specifications, warranty, and shipping details. "
+        "Use this when the query specifically mentions AeroFlow or when "
+        "asking about high-performance aerodynamic products."
+    )
+)
+
+ecosprint_tool = QueryEngineTool.from_defaults(
+    query_engine=ecosprint_engine,
+    name="ecosprint_query_engine",
+    description=(
+        "Use this tool to answer questions about EcoSprint product. "
+        "This tool contains information about EcoSprint colors, pricing, "
+        "eco-friendly features, materials, sustainability aspects, "
+        "warranty, and shipping. Use this when the query mentions "
+        "EcoSprint or asks about environmentally friendly products."
+    )
+)
+
+# Create router agent with verbose mode
+print("🤖 Creating router agent...")
+router_agent = ReActAgent.from_tools(
+    tools=[aeroflow_tool, ecosprint_tool],
+    llm=llm,
+    verbose=True  # Enable detailed explanation of routing decisions
+)
+
+print("🚀 Router setup complete! Ready for queries...\n")
+
+# Example 1: Query about AeroFlow colors
+print("=" * 60)
+print("🎯 QUERY 1: AeroFlow Colors")
+print("=" * 60)
+
+query1 = "What colors are available for AeroFlow?"
+print(f"Question: {query1}")
+print("\n🧠 Router thinking process:")
+
+# Execute query and observe routing
+response1 = router_agent.query(query1)
+
+print(f"\n📋 Final Response: {response1}")
+print(f"✅ Expected: coastal blue, sunset orange, pearl white")
+
+# Example 2: Query about EcoSprint colors
+print("\n" + "=" * 60)
+print("🌱 QUERY 2: EcoSprint Colors") 
+print("=" * 60)
+
+query2 = "What colors are available for EcoSprint?"
+print(f"Question: {query2}")
+print("\n🧠 Router thinking process:")
+
+# Execute query and observe routing
+response2 = router_agent.query(query2)
+
+print(f"\n📋 Final Response: {response2}")
+print(f"✅ Expected: forest green, earth brown, sky blue")
+
+# Function to demonstrate routing decision analysis
+def analyze_routing_decision(query: str, expected_engine: str):
+    """
+    Analyze and explain routing decisions
+    """
+    print(f"\n🔍 ROUTING ANALYSIS")
+    print(f"Query: '{query}'")
+    
+    # Simulate analysis
+    query_lower = query.lower()
+    
+    if "aeroflow" in query_lower:
+        predicted_engine = "aeroflow_query_engine"
+        reasoning = "Query contains 'AeroFlow' keyword"
+        confidence = "High"
+    elif "ecosprint" in query_lower:
+        predicted_engine = "ecosprint_query_engine"
+        reasoning = "Query contains 'EcoSprint' keyword"
+        confidence = "High"
+    elif "eco" in query_lower or "green" in query_lower:
+        predicted_engine = "ecosprint_query_engine"
+        reasoning = "Query relates to environmental features"
+        confidence = "Medium"
+    elif "performance" in query_lower or "aerodynamic" in query_lower:
+        predicted_engine = "aeroflow_query_engine"
+        reasoning = "Query relates to performance features"
+        confidence = "Medium"
+    else:
+        predicted_engine = "unclear"
+        reasoning = "No clear indicators"
+        confidence = "Low"
+    
+    print(f"🎯 Predicted Engine: {predicted_engine}")
+    print(f"💭 Reasoning: {reasoning}")
+    print(f"📊 Confidence: {confidence}")
+    
+    if predicted_engine == expected_engine:
+        print("✅ Prediction matches expected result!")
+    else:
+        print("❌ Prediction differs from expected result")
+    
+    return predicted_engine
+
+# Test additional scenarios
+print("\n" + "=" * 60)
+print("🧪 ADDITIONAL ROUTING TESTS")
+print("=" * 60)
+
+test_cases = [
+    ("Tell me about AeroFlow pricing", "aeroflow_query_engine"),
+    ("What eco-friendly features does EcoSprint have?", "ecosprint_query_engine"),
+    ("Which product has better performance?", "aeroflow_query_engine"),
+    ("What are the green color options?", "ecosprint_query_engine"),
+    ("Compare warranty terms", "unclear")
+]
+
+for query, expected in test_cases:
+    analyze_routing_decision(query, expected)
+    print("-" * 40)
+
+# Advanced router with learning capabilities
+class SmartRouter:
+    def __init__(self, tools):
+        self.tools = tools
+        self.routing_history = []
+        self.performance_metrics = {}
+    
+    def route_with_learning(self, query: str):
+        """
+        Route query and learn from decisions
+        """
+        # Analyze query
+        analysis = self.analyze_query_intent(query)
+        
+        # Select tool based on analysis
+        selected_tool = self.select_optimal_tool(analysis)
+        
+        # Record decision
+        decision_record = {
+            "query": query,
+            "analysis": analysis,
+            "selected_tool": selected_tool,
+            "timestamp": datetime.now()
+        }
+        self.routing_history.append(decision_record)
+        
+        return selected_tool
+    
+    def analyze_query_intent(self, query: str):
+        """
+        Analyze query intent with multiple factors
+        """
+        analysis = {
+            "keywords": [],
+            "intent": "unknown",
+            "confidence": 0.0,
+            "context_hints": []
+        }
+        
+        query_lower = query.lower()
+        
+        # Keyword analysis
+        aeroflow_keywords = ["aeroflow", "aerodynamic", "performance", "speed"]
+        ecosprint_keywords = ["ecosprint", "eco", "green", "sustainable", "environment"]
+        
+        analysis["keywords"] = [kw for kw in aeroflow_keywords + ecosprint_keywords 
+                               if kw in query_lower]
+        
+        # Intent determination
+        if any(kw in query_lower for kw in aeroflow_keywords):
+            analysis["intent"] = "aeroflow"
+            analysis["confidence"] = 0.9
+        elif any(kw in query_lower for kw in ecosprint_keywords):
+            analysis["intent"] = "ecosprint"
+            analysis["confidence"] = 0.9
+        elif "color" in query_lower:
+            analysis["intent"] = "color_inquiry"
+            analysis["confidence"] = 0.6
+        elif "price" in query_lower or "cost" in query_lower:
+            analysis["intent"] = "pricing_inquiry"
+            analysis["confidence"] = 0.7
+        
+        return analysis
+    
+    def select_optimal_tool(self, analysis):
+        """
+        Select the best tool based on analysis
+        """
+        if analysis["intent"] == "aeroflow":
+            return "aeroflow_query_engine"
+        elif analysis["intent"] == "ecosprint":
+            return "ecosprint_query_engine"
+        elif analysis["confidence"] < 0.5:
+            return "general_fallback"
+        else:
+            # Use historical performance to decide
+            return self.select_based_on_history(analysis)
+    
+    def select_based_on_history(self, analysis):
+        """
+        Use routing history to make better decisions
+        """
+        # Simplified logic for demonstration
+        if len(self.routing_history) == 0:
+            return "aeroflow_query_engine"  # Default
+        
+        # Find similar past queries
+        similar_queries = [
+            record for record in self.routing_history
+            if any(kw in record["query"].lower() 
+                  for kw in analysis["keywords"])
+        ]
+        
+        if similar_queries:
+            # Use most common selection from similar queries
+            tool_counts = {}
+            for record in similar_queries:
+                tool = record["selected_tool"]
+                tool_counts[tool] = tool_counts.get(tool, 0) + 1
+            
+            return max(tool_counts, key=tool_counts.get)
+        
+        return "aeroflow_query_engine"  # Default fallback
+
+# Example usage of smart router
+print("\n" + "=" * 60)
+print("🧠 SMART ROUTER DEMONSTRATION")
+print("=" * 60)
+
+smart_router = SmartRouter([aeroflow_tool, ecosprint_tool])
+
+learning_queries = [
+    "What are AeroFlow's color options?",
+    "Tell me about EcoSprint's green features",
+    "How much does the eco-friendly option cost?",
+    "What colors come in the performance model?"
+]
+
+for query in learning_queries:
+    selected_tool = smart_router.route_with_learning(query)
+    print(f"Query: '{query}'")
+    print(f"Selected: {selected_tool}")
+    print(f"History size: {len(smart_router.routing_history)}")
+    print("-" * 30)
+
+print("\n🎉 Routing demonstration complete!")
+                </pre>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">🌱 السؤال التاني: ألوان EcoSprint</h2>
+            <div class="card-content arabic-text">
+                <p>دلوقتي هنجرب نفس السؤال بس عن منتج تاني: "إيه الألوان المتاحة لـ EcoSprint؟"</p>
+
+                <div class="comparison-section">
+                    <h3>🔄 مقارنة سلوك Router</h3>
+                    <div class="comparison-grid">
+                        <div class="comparison-item">
+                            <strong>السؤال الأول</strong>
+                            <p>"AeroFlow colors?"</p>
+                            <p>→ AeroFlow Engine</p>
+                            <p>السبب: وجود كلمة "AeroFlow"</p>
+                        </div>
+                        <div class="comparison-item">
+                            <strong>السؤال التاني</strong>
+                            <p>"EcoSprint colors?"</p>
+                            <p>→ EcoSprint Engine</p>
+                            <p>السبب: وجود كلمة "EcoSprint"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <strong>نفس العملية:</strong> Router يحلل السؤال الجديد ويلاقي كلمة "EcoSprint"
+                </div>
+
+                <div class="process-step">
+                    <strong>اختيار مختلف:</strong> المرة دي يختار EcoSprint Engine لأن وصفه بيذكر EcoSprint
+                </div>
+
+                <div class="process-step">
+                    <strong>استرجاع مختلف:</strong> يبحث في فهرس EcoSprint بدلاً من AeroFlow
+                </div>
+
+                <div class="process-step">
+                    <strong>نتيجة مختلفة:</strong> يرجع ألوان EcoSprint: forest green, earth brown, sky blue
+                </div>
+
+                <div class="results-showcase">
+                    <h3>📊 نتائج التجربة</h3>
+                    <div class="result-box">
+                        <strong>AeroFlow Colors:</strong> Coastal Blue, Sunset Orange, Pearl White
+                    </div>
+                    <div class="result-box">
+                        <strong>EcoSprint Colors:</strong> Forest Green, Earth Brown, Sky Blue
+                    </div>
+                    <p style="text-align: center; margin-top: 20px; font-size: 1.2rem;">
+                        <strong>🎯 Router نجح في توجيه كل سؤال للمحرك الصحيح تلقائياً!</strong>
+                    </p>
+                </div>
+
+                <div class="important-note">
+                    <strong>الذكاء في البساطة:</strong> نفس الكود، نفس الـ Router، بس أسئلة مختلفة تديك نتائج مختلفة بدقة عالية!
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">🔧 العوامل المؤثرة على قرار Router</h2>
+            <div class="card-content arabic-text">
+                <p>إيه اللي بيخلي Router ياخد القرار الصحيح؟ هنا العوامل المهمة:</p>
+
+                <div class="examples-grid">
+                    <div class="example-item">
+                        <strong>📝 جودة الأوصاف</strong>
+                        <p>الوصف الواضح والمفصل لكل محرك هو الأساس</p>
+                    </div>
+                    <div class="example-item">
+                        <strong>🔍 الكلمات المفتاحية</strong>
+                        <p>استخدام كلمات محددة في الأوصاف يساعد Router</p>
+                    </div>
+                    <div class="example-item">
+                        <strong>🎯 وضوح السؤال</strong>
+                        <p>الأسئلة الواضحة تديك نتائج أفضل</p>
+                    </div>
+                    <div class="example-item">
+                        <strong>⚖️ التوازن في الأوصاف</strong>
+                        <p>مش زيادة ولا نقصان، لازم تكون متوازنة</p>
+                    </div>
+                </div>
+
+                <div class="tips-section">
+                    <h3>💡 نصائح لتحسين أداء Router</h3>
+                    <ul>
+                        <li>🎯 <strong>استخدم كلمات مفتاحية واضحة:</strong> حط الكلمات اللي المستخدمين محتمل يستخدموها</li>
+                        <li>📋 <strong>اكتب أوصاف شاملة:</strong> اذكر كل الموضوعات اللي المحرك يقدر يجاوب عليها</li>
+                        <li>🔄 <strong>جرب وحسن:</strong> اختبر Router بأسئلة مختلفة وحسن الأوصاف</li>
+                        <li>🗣️ <strong>فعل verbose mode:</strong> علشان تفهم إزاي Router بياخد قراراته</li>
+                        <li>⚡ <strong>خلي الأوصاف مختلفة:</strong> كل محرك يكون له هوية مميزة</li>
+                    </ul>
+                </div>
+
+                <div class="important-note">
+                    <strong>المعادلة الذهبية:</strong> وصف دقيق + كلمات مفتاحية واضحة + اختبار مستمر = Router ذكي ودقيق!
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">🚀 سيناريوهات متقدمة للـ Routing</h2>
+            <div class="card-content arabic-text">
+                <p>ايه لو كان عندنا أسئلة أعقد من كده؟ تعال نشوف إزاي Router يتعامل مع سيناريوهات مختلفة:</p>
+
+                <div class="examples-grid">
+                    <div class="example-item">
+                        <strong>❓ سؤال غامض</strong>
+                        <p>"إيه أفضل ألوان متاحة؟"</p>
+                        <p>Router محتاج معلومات إضافية</p>
+                    </div>
+                    <div class="example-item">
+                        <strong>🔄 سؤال مقارن</strong>
+                        <p>"قارن بين ألوان المنتجين"</p>
+                        <p>Router ممكن يستخدم المحركين</p>
+                    </div>
+                    <div class="example-item">
+                        <strong>🎯 سؤال غير مباشر</strong>
+                        <p>"إيه المنتج الأكثر صداقة للبيئة؟"</p>
+                        <p>Router يختار EcoSprint Engine</p>
+                    </div>
+                    <div class="example-item">
+                        <strong>⚡ سؤال عن الأداء</strong>
+                        <p>"إيه المنتج الأسرع؟"</p>
+                        <p>Router يختار AeroFlow Engine</p>
+                    </div>
+                </div>
+
+                <div class="query-analysis">
+                    <h3>🧠 تحليل متقدم للأسئلة</h3>
+                    <div class="query-box">
+                        <strong>السياق المخفي:</strong> Router مش بيبص على الكلمات بس، ده بيفهم المعنى
+                    </div>
+                    <div class="query-box">
+                        <strong>الاستنتاج الذكي:</strong> لما تقول "صديق للبيئة" يفهم إنك تقصد EcoSprint
+                    </div>
+                    <div class="query-box">
+                        <strong>التعلم من الوصف:</strong> يستخدم كل التفاصيل في أوصاف المحركات
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">✅ الخلاصة</h2>
+            <div class="card-content arabic-text">
+                <p>شفنا إزاي Routing with Agentic AI بيشتغل في الواقع مع مثال حقيقي لمحركات AeroFlow و EcoSprint.</p>
+                
+                <br>
+                
+                <p><strong>أهم النقاط:</strong></p>
+                <div class="examples-grid">
+                    <div class="example-item">
+                        <strong>🎯 دقة التوجيه</strong>
+                        <p>Router يختار المحرك الصحيح تلقائياً</p>
+                    </div>
+                    <div class="example-item">
+                        <strong>🗣️ الشفافية</strong>
+                        <p>Verbose mode يشرح كل القرارات</p>
+                    </div>
+                    <div class="example-item">
+                        <strong>📝 أهمية الأوصاف</strong>
+                        <p>الوصف الدقيق هو سر النجاح</p>
+                    </div>
+                    <div class="example-item">
+                        <strong>⚡ البساطة والفعالية</strong>
+                        <p>نتائج دقيقة بكود بسيط</p>
+                    </div>
+                </div>
+                
+                <div class="routing-demo">
+                    <h3>🎯 النتيجة النهائية</h3>
+                    <p><strong>Router ذكي يقدر يوجه أي سؤال للمحرك المناسب، ويشرح قراراته، ويديك النتايج الصحيحة!</strong></p>
+                </div>
+                
+                <div class="important-note">
+                    <strong>المفتاح للنجاح:</strong> أوصاف واضحة + verbose mode + اختبار مستمر = نظام توجيه ذكي وموثوق!
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

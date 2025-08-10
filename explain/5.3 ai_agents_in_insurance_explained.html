@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agents في مجال التأمين - شرح مركز</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .card h2 {
+            color: #2c3e50;
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 8px;
+        }
+
+        .card h3 {
+            color: #34495e;
+            font-size: 1.3rem;
+            margin: 20px 0 12px 0;
+        }
+
+        .card h3:before {
+            content: "🔹";
+            margin-left: 8px;
+        }
+
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .agent-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 18px;
+            border-radius: 12px;
+            border-left: 4px solid #3498db;
+        }
+
+        .agent-card h4 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .agent-card p {
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .code-card {
+            background: #1e1e1e;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .code-card h3 {
+            color: #61dafb;
+            margin-bottom: 12px;
+            direction: rtl;
+            text-align: right;
+        }
+
+        pre {
+            background: #2d2d2d;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 13px;
+        }
+
+        code {
+            color: #f8f8f2;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.4;
+        }
+
+        .python { color: #66d9ef; }
+        .string { color: #a6e22e; }
+        .comment { color: #75715e; }
+        .keyword { color: #f92672; }
+        .function { color: #a6e22e; }
+
+        .workflow-diagram {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .workflow-step {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 12px 18px;
+            margin: 8px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .tool-item {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .tool-item h4 {
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .tool-item p {
+            font-size: 0.85rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-right: 4px solid #e17055;
+        }
+
+        ul {
+            padding-right: 20px;
+            margin: 10px 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            .agents-grid, .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            .card {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏛️ AI Agents في مجال التأمين</h1>
+            <p>تطبيقات الذكاء الاصطناعي في صناعة التأمين</p>
+        </div>
+
+        <div class="card">
+            <h2>📋 نظرة عامة على التطبيقات</h2>
+            <p>مجال التأمين فيه عمليات معقدة كتير AI Agents تقدر تساعد فيها بشكل كبير.</p>
+            
+            <div class="agents-grid">
+                <div class="agent-card">
+                    <h4>🔍 كشف الاحتيال</h4>
+                    <p>تحليل معلومات البوليصة وملف العميل والمطالبات لكشف الاحتيال المحتمل</p>
+                </div>
+
+                <div class="agent-card">
+                    <h4>📄 إنشاء البوالص المخصصة</h4>
+                    <p>تخصيص البوليصة حسب احتياجات العميل وتاريخه ومتطلبات التغطية</p>
+                </div>
+
+                <div class="agent-card">
+                    <h4>📊 تقارير الامتثال</h4>
+                    <p>ضمان الامتثال للمتطلبات وتقديم الوثائق للجهات المختصة</p>
+                </div>
+
+                <div class="agent-card">
+                    <h4>⚙️ معالجة المطالبات</h4>
+                    <p>تنفيذ سير عمل المطالبة حسب نوعها ومحتواها ومبلغها</p>
+                </div>
+
+                <div class="agent-card">
+                    <h4>💬 دعم العملاء</h4>
+                    <p>مساعدة آلية للعملاء في أسئلة البوالص ومشاكل المطالبات</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🔀 Claims Routing Agent - وكيل توجيه المطالبات</h2>
+            <p>يستخدم Router Pattern لتوجيه المطالبة للمسار المناسب.</p>
+
+            <div class="tools-grid">
+                <div class="tool-item">
+                    <h4>🤖 Automated Claims Agent</h4>
+                    <p>معالجة المطالبات البسيطة بالكامل آلياً</p>
+                </div>
+
+                <div class="tool-item">
+                    <h4>👥 Manual Claims System</h4>
+                    <p>تحويل المطالبات المعقدة للمعالجة البشرية</p>
+                </div>
+            </div>
+
+            <div class="workflow-diagram">
+                <div class="workflow-step">استقبال المطالبة</div>
+                <div class="workflow-step">تحليل التعقيد</div>
+                <div class="workflow-step">اختيار المسار</div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>📝 مدخلات النظام:</h4>
+                <ul>
+                    <li>الهدف: توجيه المطالبة للمسار الصحيح</li>
+                    <li>المطالبة التأمينية نفسها</li>
+                    <li>تفاصيل البوليصة</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>⚙️ Automated Claims Agent - وكيل المطالبات الآلي</h2>
+            <p>يتحقق من المطالبة ويقرر مبلغ التسوية.</p>
+
+            <div class="tools-grid">
+                <div class="tool-item">
+                    <h4>🔍 Fraud Detection Tool</h4>
+                    <p>كشف الاحتيال المحتمل في المطالبة</p>
+                </div>
+
+                <div class="tool-item">
+                    <h4>✅ Claim Verification Tool</h4>
+                    <p>التواصل مع الجهات الخارجية وسحب تقارير الحوادث</p>
+                </div>
+
+                <div class="tool-item">
+                    <h4>🔄 Settlement Review Tool</h4>
+                    <p>يستخدم Reflection Pattern لمراجعة مسودة التسوية</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="code-card">
+            <h3>💻 مثال مبسط: نظام توجيه المطالبات</h3>
+            <pre><code><span class="keyword">class</span> <span class="function">ClaimsRoutingAgent</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(self):
+        self.automated_agent = AutomatedClaimsAgent()
+        self.manual_system = ManualClaimsSystem()
+    
+    <span class="keyword">def</span> <span class="function">route_claim</span>(self, claim, policy):
+        <span class="comment"># تحليل تعقيد المطالبة</span>
+        complexity = self._analyze_complexity(claim, policy)
+        
+        <span class="keyword">if</span> complexity == <span class="string">'simple'</span>:
+            <span class="keyword">return</span> self.automated_agent.process(claim, policy)
+        <span class="keyword">else</span>:
+            <span class="keyword">return</span> self.manual_system.forward(claim, policy)
+    
+    <span class="keyword">def</span> <span class="function">_analyze_complexity</span>(self, claim, policy):
+        <span class="comment"># معايير التعقيد</span>
+        <span class="keyword">if</span> claim.amount > policy.max_auto_amount:
+            <span class="keyword">return</span> <span class="string">'complex'</span>
+        <span class="keyword">if</span> claim.type <span class="keyword">in</span> [<span class="string">'injury'</span>, <span class="string">'legal'</span>]:
+            <span class="keyword">return</span> <span class="string">'complex'</span>
+        <span class="keyword">return</span> <span class="string">'simple'</span>
+
+<span class="keyword">class</span> <span class="function">AutomatedClaimsAgent</span>:
+    <span class="keyword">def</span> <span class="function">process</span>(self, claim, policy):
+        <span class="comment"># خطوات المعالجة الآلية</span>
+        fraud_check = self._check_fraud(claim)
+        verification = self._verify_claim(claim)
+        settlement = self._calculate_settlement(claim, policy)
+        
+        <span class="keyword">if</span> fraud_check[<span class="string">'risk'</span>] > <span class="python">0.7</span>:
+            <span class="keyword">return</span> {<span class="string">'status'</span>: <span class="string">'rejected'</span>, <span class="string">'reason'</span>: <span class="string">'fraud_detected'</span>}
+        
+        <span class="keyword">return</span> {
+            <span class="string">'status'</span>: <span class="string">'approved'</span>,
+            <span class="string">'settlement_amount'</span>: settlement,
+            <span class="string">'processing_time'</span>: <span class="string">'2_hours'</span>
+        }
+</code></pre>
+        </div>
+
+        <div class="card">
+            <h2>🔄 سير العمل المتكامل</h2>
+            
+            <div class="workflow-diagram">
+                <div class="workflow-step">تحليل المطالبة</div>
+                <div class="workflow-step">كشف الاحتيال</div>
+                <div class="workflow-step">التحقق الخارجي</div>
+                <div class="workflow-step">حساب التسوية</div>
+                <div class="workflow-step">مراجعة التسوية</div>
+                <div class="workflow-step">الموافقة النهائية</div>
+            </div>
+
+            <div class="highlight-box">
+                <h4>🎯 استخدام الأنماط المختلفة:</h4>
+                <ul>
+                    <li><strong>Router Pattern:</strong> في توجيه المطالبات</li>
+                    <li><strong>Planning Pattern:</strong> في إنشاء سير عمل مخصص</li>
+                    <li><strong>Reflection Pattern:</strong> في مراجعة التسوية</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>💡 الفوائد الرئيسية</h2>
+            <ul>
+                <li>تسريع معالجة المطالبات من أسابيع لساعات</li>
+                <li>تقليل التكاليف التشغيلية بنسبة كبيرة</li>
+                <li>تحسين دقة كشف الاحتيال</li>
+                <li>ضمان الامتثال للقوانين والتشريعات</li>
+                <li>تحسين تجربة العميل</li>
+                <li>تقليل الأخطاء البشرية</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
