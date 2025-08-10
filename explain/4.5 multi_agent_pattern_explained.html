@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شرح Multi-Agent Pattern في Agentic AI</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      direction: rtl;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      color: white;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .card {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-title {
+      color: #2c3e50;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      border-bottom: 3px solid #f39c12;
+      padding-bottom: 10px;
+    }
+
+    .card-content {
+      line-height: 1.8;
+      color: #333;
+      font-size: 1.1rem;
+    }
+
+    .code-card {
+      background: #2c3e50;
+      color: #ecf0f1;
+      border-radius: 15px;
+      padding: 25px;
+      margin: 20px 0;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .code-card pre {
+      overflow-x: auto;
+      white-space: pre-wrap;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .highlight {
+      background: linear-gradient(120deg, #ff9ff3 0%, #f368e0 100%);
+      padding: 3px 8px;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .process-step {
+      background: #f8f9fa;
+      border-left: 5px solid #f39c12;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 0 10px 10px 0;
+    }
+
+    .important-note {
+      background: #fff3cd;
+      border: 1px solid #ffeaa7;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .important-note::before {
+      content: "💡 ";
+      font-size: 1.5rem;
+    }
+
+    .examples-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .example-item {
+      background: #e8f5e8;
+      padding: 20px;
+      border-radius: 10px;
+      border: 2px solid #27ae60;
+    }
+
+    .arabic-text {
+      direction: rtl;
+      text-align: right;
+    }
+
+    .ltr-text {
+      direction: ltr;
+      text-align: left;
+    }
+
+    .team-analogy {
+      background: linear-gradient(45deg, #f39c12, #e67e22);
+      color: white;
+      padding: 25px;
+      border-radius: 15px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .team-members {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .team-member {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .system-architecture {
+      background: #74b9ff;
+      color: white;
+      padding: 25px;
+      border-radius: 15px;
+      margin: 20px 0;
+    }
+
+    .architecture-diagram {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .agent-layer {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .connections {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 10px 0;
+    }
+
+    .connection-line {
+      width: 3px;
+      height: 30px;
+      background: #fdcb6e;
+      border-radius: 2px;
+    }
+
+    .ecommerce-example {
+      background: #00cec9;
+      color: white;
+      padding: 25px;
+      border-radius: 15px;
+      margin: 20px 0;
+    }
+
+    .ecommerce-agents {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .agent-card {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .agent-responsibilities {
+      margin: 10px 0;
+      font-size: 0.9rem;
+    }
+
+    .microservices-comparison {
+      background: #6c5ce7;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+
+    .comparison-table {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 15px 0;
+    }
+
+    .comparison-column {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    .agent-benefits {
+      background: #00b894;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+
+    .agent-benefits ul {
+      margin: 15px 0;
+      padding-right: 20px;
+    }
+
+    .agent-benefits li {
+      margin: 10px 0;
+      font-size: 1.1rem;
+    }
+
+    .workflow-diagram {
+      background: linear-gradient(45deg, #fd79a8, #fdcb6e);
+      color: white;
+      padding: 25px;
+      border-radius: 15px;
+      margin: 20px 0;
+    }
+
+    .workflow-steps {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin: 15px 0;
+    }
+
+    .workflow-step {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      min-width: 150px;
+      flex: 1;
+    }
+
+    .arrow-flow {
+      font-size: 1.5rem;
+      color: #2d3436;
+    }
+
+    .agent-interaction {
+      background: #a29bfe;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+
+    .interaction-flow {
+      margin: 15px 0;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      border-left: 4px solid #fdcb6e;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>👥 شرح Multi-Agent Pattern في Agentic AI</h1>
+      <p>نمط الفرق المتعددة - تعاون الوكلاء الأذكياء لتحقيق أهداف معقدة</p>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">🤝 إيه هو Multi-Agent Pattern؟</h2>
+      <div class="card-content arabic-text">
+        <p>تخيل إنك بتبني بيت كبير. مش هتقدر تعمل ده لوحدك، صح؟ هتحتاج فريق: مهندس معماري، مقاول، كهربائي، سباك، نجار،
+          ودهان. كل واحد متخصص في مجاله، وكلهم يشتغلوا مع بعض علشان يحققوا الهدف الكبير.</p>
+
+        <br>
+
+        <p>ده بالضبط اللي بيحصل في Multi-Agent Pattern! <span class="highlight">نمط الفرق المتعددة</span> بيستخدم مجموعة
+          من الـ AI Agents المتخصصة، كل واحد فيهم خبير في مجال معين، وكلهم يتعاونوا مع بعض علشان يحققوا هدف واحد كبير.
+        </p>
+
+        <br>
+
+        <p>ده <span class="highlight">نمط التجميع (Ensemble Pattern)</span> اللي بيخلي الأنظمة المعقدة في الشركات
+          الكبيرة تشتغل بكفاءة عالية!</p>
+
+        <div class="team-analogy">
+          <h3>👨‍💼 زي فريق العمل البشري بالضبط!</h3>
+          <div class="team-members">
+            <div class="team-member">
+              <strong>🏗️ المهندس</strong>
+              <p>يصمم ويخطط</p>
+            </div>
+            <div class="team-member">
+              <strong>🔧 الفني</strong>
+              <p>ينفذ ويصلح</p>
+            </div>
+            <div class="team-member">
+              <strong>📊 المحلل</strong>
+              <p>يحلل ويقيم</p>
+            </div>
+            <div class="team-member">
+              <strong>📞 خدمة العملاء</strong>
+              <p>يتواصل ويساعد</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">🎯 ليه محتاجين Multi-Agent Systems؟</h2>
+      <div class="card-content arabic-text">
+        <p>المشاريع المعقدة في الشركات الكبيرة محتاجة تخصصات مختلفة، وده اللي بيخلي Multi-Agent Pattern مهم جداً:</p>
+
+        <div class="examples-grid">
+          <div class="example-item">
+            <strong>🎯 التخصص العميق</strong>
+            <p>كل Agent متخصص في مجال معين ومتفوق فيه</p>
+          </div>
+          <div class="example-item">
+            <strong>🤝 التعاون والتنسيق</strong>
+            <p>الـ Agents تقدر تشتغل مع بعض وتتبادل المهارات</p>
+          </div>
+          <div class="example-item">
+            <strong>🔄 إعادة الاستخدام</strong>
+            <p>نفس الـ Agent يقدر يشارك في مشاريع مختلفة</p>
+          </div>
+          <div class="example-item">
+            <strong>⚡ الكفاءة العالية</strong>
+            <p>تقسيم العمل يحسن السرعة والجودة</p>
+          </div>
+        </div>
+
+        <div class="microservices-comparison">
+          <h3>🏗️ مقارنة مع Microservices Architecture</h3>
+          <div class="comparison-table">
+            <div class="comparison-column">
+              <strong>🤖 Multi-Agent Systems</strong>
+              <ul>
+                <li>كل Agent له مسؤولية محددة</li>
+                <li>يتواصلوا ويتعاونوا مع بعض</li>
+                <li>يمكن استخدامهم في أنظمة مختلفة</li>
+                <li>فصل الاهتمامات والتخصصات</li>
+              </ul>
+            </div>
+            <div class="comparison-column">
+              <strong>🔧 Microservices</strong>
+              <ul>
+                <li>كل Service له وظيفة محددة</li>
+                <li>يتواصلوا عبر APIs</li>
+                <li>يمكن نشرهم منفصلين</li>
+                <li>فصل المسؤوليات التقنية</li>
+              </ul>
+            </div>
+          </div>
+          <p style="text-align: center; margin-top: 15px;"><strong>النتيجة: نفس المبادئ، تطبيق مختلف!</strong></p>
+        </div>
+
+        <div class="important-note">
+          <strong>مصادر الـ Agents:</strong> ممكن تبني الـ Agents بنفسك داخل الشركة، أو تشتريها من طرف تالت، أو تستخدم
+          Open Source Agents جاهزة!
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">🛒 مثال عملي: نظام التجارة الإلكترونية</h2>
+      <div class="card-content arabic-text">
+        <p>تعال نشوف مثال حقيقي على Multi-Agent System في موقع تجارة إلكترونية:</p>
+
+        <div class="ecommerce-example">
+          <h3>🏪 نظام المتجر الإلكتروني المتكامل</h3>
+          <div class="ecommerce-agents">
+            <div class="agent-card">
+              <strong>🤝 Virtual Sales Agent</strong>
+              <div class="agent-responsibilities">
+                <p>• يتكلم مع العملاء</p>
+                <p>• يساعد في اختيار المنتجات</p>
+                <p>• يستقبل الطلبات</p>
+              </div>
+            </div>
+            <div class="agent-card">
+              <strong>📚 Product Expert Agent</strong>
+              <div class="agent-responsibilities">
+                <p>• يعرف كل تفاصيل المنتجات</p>
+                <p>• مبني على RAG system</p>
+                <p>• متصل بقاعدة بيانات المنتجات</p>
+              </div>
+            </div>
+            <div class="agent-card">
+              <strong>📦 Sales Fulfillment Agent</strong>
+              <div class="agent-responsibilities">
+                <p>• يستقبل الطلبات</p>
+                <p>• ينظم عملية الشحن</p>
+                <p>• يتابع حالة الطلبات</p>
+              </div>
+            </div>
+            <div class="agent-card">
+              <strong>💬 Customer Support Agent</strong>
+              <div class="agent-responsibilities">
+                <p>• يتعامل مع شكاوى العملاء</p>
+                <p>• يحل المشاكل التقنية</p>
+                <p>• يجاوب على الاستفسارات</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="agent-interaction">
+          <h3>🔄 تفاعل الـ Agents مع بعض</h3>
+
+          <div class="interaction-flow">
+            <strong>سيناريو 1: عميل يسأل عن منتج</strong>
+            <p>العميل → Sales Agent → Product Expert Agent → Sales Agent → العميل</p>
+          </div>
+
+          <div class="interaction-flow">
+            <strong>سيناريو 2: عميل يريد وضع طلب</strong>
+            <p>العميل → Sales Agent → Fulfillment Agent → Sales Agent → العميل</p>
+          </div>
+
+          <div class="interaction-flow">
+            <strong>سيناريو 3: عميل يسأل عن حالة طلبه</strong>
+            <p>العميل → Customer Support → Fulfillment Agent → Customer Support → العميل</p>
+          </div>
+
+          <div class="interaction-flow">
+            <strong>سيناريو 4: عميل يسأل عن تفاصيل منتج اشتراه</strong>
+            <p>العميل → Customer Support → Product Expert → Customer Support → العميل</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">💻 مثال بالكود: E-commerce Multi-Agent System</h2>
+      <div class="card-content arabic-text">
+        <p>ده تطبيق عملي لنظام Multi-Agent للتجارة الإلكترونية:</p>
+      </div>
+
+      <div class="code-card">
+        <pre>
+import asyncio
+from abc import ABC, abstractmethod
+from typing import Dict, List, Any, Optional
+
+class BaseAgent(ABC):
+    """
+    Base class for all agents in the multi-agent system
+    """
+    def __init__(self, agent_id: str, name: str):
+        self.agent_id = agent_id
+        self.name = name
+        self.llm = LLM()
+        self.capabilities = []
+        self.connected_agents = {}
+    
+    def register_agent(self, agent_name: str, agent_instance):
+        """Register another agent for collaboration"""
+        self.connected_agents[agent_name] = agent_instance
+        print(f"{self.name} connected to {agent_name}")
+    
+    @abstractmethod
+    async def process_request(self, request: Dict[str, Any]) -> Dict[str, Any]:
+        """Process incoming request"""
+        pass
+    
+    async def delegate_to_agent(self, agent_name: str, request: Dict[str, Any]) -> Dict[str, Any]:
+        """Delegate request to another agent"""
+        if agent_name in self.connected_agents:
+            print(f"{self.name} delegating to {agent_name}: {request['query']}")
+            return await self.connected_agents[agent_name].process_request(request)
+        else:
+            return {"error": f"Agent {agent_name} not available"}
+
+class ProductExpertAgent(BaseAgent):
+    """
+    Specialized agent for product information using RAG system
+    """
+    def __init__(self):
+        super().__init__("product_expert", "Product Expert Agent")
+        self.product_database = ProductDatabase()
+        self.rag_system = RAGSystem(self.product_database)
+        self.capabilities = ["product_details", "product_comparison", "product_recommendations"]
+    
+    async def process_request(self, request: Dict[str, Any]) -> Dict[str, Any]:
+        """Process product-related queries"""
+        query = request.get("query", "")
+        request_type = request.get("type", "general")
+        
+        print(f"🔍 {self.name} processing: {query}")
+        
+        if request_type == "product_details":
+            return await self.get_product_details(request.get("product_id"))
+        elif request_type == "product_search":
+            return await self.search_products(query)
+        elif request_type == "product_comparison":
+            return await self.compare_products(request.get("product_ids", []))
+        else:
+            return await self.general_product_query(query)
+    
+    async def get_product_details(self, product_id: str) -> Dict[str, Any]:
+        """Get detailed information about a specific product"""
+        product_info = self.product_database.get_product(product_id)
+        
+        # Use RAG to enhance product information
+        enhanced_info = self.rag_system.enhance_product_info(product_info)
+        
+        return {
+            "type": "product_details",
+            "product": enhanced_info,
+            "source": self.name
+        }
+    
+    async def search_products(self, query: str) -> Dict[str, Any]:
+        """Search for products based on query"""
+        search_results = self.rag_system.search_products(query)
+        
+        return {
+            "type": "search_results",
+            "results": search_results,
+            "query": query,
+            "source": self.name
+        }
+    
+    async def general_product_query(self, query: str) -> Dict[str, Any]:
+        """Handle general product questions using RAG"""
+        response = self.rag_system.query(query)
+        
+        return {
+            "type": "general_response",
+            "answer": response,
+            "source": self.name
+        }
+
+class SalesFulfillmentAgent(BaseAgent):
+    """
+    Specialized agent for order processing and fulfillment
+    """
+    def __init__(self):
+        super().__init__("fulfillment", "Sales Fulfillment Agent")
+        self.order_system = OrderManagementSystem()
+        self.shipping_system = ShippingSystem()
+        self.capabilities = ["place_order", "track_order", "cancel_order", "update_order"]
+    
+    async def process_request(self, request: Dict[str, Any]) -> Dict[str, Any]:
+        """Process order-related requests"""
+        request_type = request.get("type", "")
+        
+        print(f"📦 {self.name} processing: {request_type}")
+        
+        if request_type == "place_order":
+            return await self.place_order(request)
+        elif request_type == "track_order":
+            return await self.track_order(request.get("order_id"))
+        elif request_type == "cancel_order":
+            return await self.cancel_order(request.get("order_id"))
+        elif request_type == "order_status":
+            return await self.get_order_status(request.get("order_id"))
+        else:
+            return {"error": "Unknown request type"}
+    
+    async def place_order(self, order_request: Dict[str, Any]) -> Dict[str, Any]:
+        """Place a new order"""
+        customer_info = order_request.get("customer")
+        items = order_request.get("items")
+        
+        # Validate order
+        validation_result = self.order_system.validate_order(customer_info, items)
+        
+        if not validation_result.is_valid:
+            return {
+                "success": False,
+                "error": validation_result.error_message,
+                "source": self.name
+            }
+        
+        # Create order
+        order = self.order_system.create_order(customer_info, items)
+        
+        # Initialize shipping
+        shipping_info = self.shipping_system.schedule_shipment(order)
+        
+        return {
+            "success": True,
+            "order_id": order.id,
+            "estimated_delivery": shipping_info.estimated_delivery,
+            "tracking_number": shipping_info.tracking_number,
+            "source": self.name
+        }
+    
+    async def track_order(self, order_id: str) -> Dict[str, Any]:
+        """Track order status"""
+        order = self.order_system.get_order(order_id)
+        
+        if not order:
+            return {
+                "success": False,
+                "error": "Order not found",
+                "source": self.name
+            }
+        
+        tracking_info = self.shipping_system.get_tracking_info(order.tracking_number)
+        
+        return {
+            "success": True,
+            "order_id": order_id,
+            "status": order.status,
+            "tracking_info": tracking_info,
+            "source": self.name
+        }
+
+class VirtualSalesAgent(BaseAgent):
+    """
+    Main sales agent that interacts with customers and coordinates with other agents
+    """
+    def __init__(self):
+        super().__init__("sales", "Virtual Sales Agent")
+        self.conversation_history = {}
+        self.capabilities = ["customer_interaction", "product_consultation", "order_placement"]
+    
+    async def process_request(self, request: Dict[str, Any]) -> Dict[str, Any]:
+        """Process customer requests and coordinate with other agents"""
+        customer_id = request.get("customer_id")
+        message = request.get("message", "")
+        
+        print(f"🤝 {self.name} handling customer {customer_id}: {message}")
+        
+        # Analyze customer intent
+        intent_analysis = self.llm.analyze_customer_intent(message)
+        
+        if intent_analysis.intent == "product_inquiry":
+            return await self.handle_product_inquiry(customer_id, message, intent_analysis)
+        elif intent_analysis.intent == "place_order":
+            return await self.handle_order_placement(customer_id, message, intent_analysis)
+        elif intent_analysis.intent == "general_chat":
+            return await self.handle_general_conversation(customer_id, message)
+        else:
+            return await self.handle_unknown_intent(customer_id, message)
+    
+    async def handle_product_inquiry(self, customer_id: str, message: str, intent_analysis) -> Dict[str, Any]:
+        """Handle product-related questions by delegating to Product Expert"""
+        
+        # Delegate to Product Expert Agent
+        product_request = {
+            "query": message,
+            "type": intent_analysis.product_query_type,
+            "customer_context": self.conversation_history.get(customer_id, {})
+        }
+        
+        product_response = await self.delegate_to_agent("product_expert", product_request)
+        
+        # Convert technical response to customer-friendly format
+        customer_response = self.llm.format_for_customer(
+            technical_response=product_response,
+            customer_context=self.conversation_history.get(customer_id, {}),
+            conversation_style="friendly_sales"
+        )
+        
+        # Update conversation history
+        self.update_conversation_history(customer_id, message, customer_response)
+        
+        return {
+            "response": customer_response,
+            "source": self.name,
+            "delegated_to": "product_expert"
+        }
+    
+    async def handle_order_placement(self, customer_id: str, message: str, intent_analysis) -> Dict[str, Any]:
+        """Handle order placement by delegating to Fulfillment Agent"""
+        
+        # Extract order information from customer message
+        order_info = self.llm.extract_order_information(
+            message=message,
+            conversation_history=self.conversation_history.get(customer_id, {})
+        )
+        
+        if not order_info.is_complete:
+            # Ask for missing information
+            clarification_response = self.llm.request_missing_order_info(order_info.missing_fields)
+            return {
+                "response": clarification_response,
+                "requires_input": True,
+                "missing_fields": order_info.missing_fields,
+                "source": self.name
+            }
+        
+        # Delegate to Fulfillment Agent
+        fulfillment_request = {
+            "type": "place_order",
+            "customer": order_info.customer_info,
+            "items": order_info.items
+        }
+        
+        fulfillment_response = await self.delegate_to_agent("fulfillment", fulfillment_request)
+        
+        if fulfillment_response.get("success"):
+            customer_response = f"رائع! تم تأكيد طلبك برقم {fulfillment_response['order_id']}. سيتم التوصيل خلال {fulfillment_response['estimated_delivery']}. رقم التتبع: {fulfillment_response['tracking_number']}"
+        else:
+            customer_response = f"عذراً، حدث خطأ في معالجة طلبك: {fulfillment_response.get('error', 'خطأ غير معروف')}"
+        
+        return {
+            "response": customer_response,
+            "order_result": fulfillment_response,
+            "source": self.name,
+            "delegated_to": "fulfillment"
+        }
+    
+    def update_conversation_history(self, customer_id: str, customer_message: str, agent_response: str):
+        """Update conversation history for better context"""
+        if customer_id not in self.conversation_history:
+            self.conversation_history[customer_id] = []
+        
+        self.conversation_history[customer_id].append({
+            "customer": customer_message,
+            "agent": agent_response,
+            "timestamp": datetime.now()
+        })
+
+class CustomerSupportAgent(BaseAgent):
+    """
+    Specialized agent for customer support and issue resolution
+    """
+    def __init__(self):
+        super().__init__("support", "Customer Support Agent")
+        self.ticket_system = TicketManagementSystem()
+        self.capabilities = ["issue_resolution", "order_inquiries", "technical_support"]
+    
+    async def process_request(self, request: Dict[str, Any]) -> Dict[str, Any]:
+        """Process customer support requests"""
+        customer_id = request.get("customer_id")
+        issue = request.get("issue", "")
+        
+        print(f"💬 {self.name} handling support for customer {customer_id}: {issue}")
+        
+        # Analyze issue type
+        issue_analysis = self.llm.analyze_support_issue(issue)
+        
+        if issue_analysis.category == "order_inquiry":
+            return await self.handle_order_inquiry(customer_id, issue, issue_analysis)
+        elif issue_analysis.category == "product_question":
+            return await self.handle_product_question(customer_id, issue)
+        elif issue_analysis.category == "technical_issue":
+            return await self.handle_technical_issue(customer_id, issue)
+        else:
+            return await self.handle_general_support(customer_id, issue)
+    
+    async def handle_order_inquiry(self, customer_id: str, issue: str, issue_analysis) -> Dict[str, Any]:
+        """Handle order-related inquiries by delegating to Fulfillment Agent"""
+        
+        order_id = issue_analysis.extracted_order_id
+        
+        fulfillment_request = {
+            "type": "order_status",
+            "order_id": order_id
+        }
+        
+        order_info = await self.delegate_to_agent("fulfillment", fulfillment_request)
+        
+        if order_info.get("success"):
+            response = f"حالة طلبك رقم {order_id}: {order_info['status']}. معلومات التتبع: {order_info['tracking_info']}"
+        else:
+            response = f"عذراً، لم أتمكن من العثور على طلب رقم {order_id}. يرجى التأكد من رقم الطلب."
+        
+        return {
+            "response": response,
+            "order_info": order_info,
+            "source": self.name,
+            "delegated_to": "fulfillment"
+        }
+    
+    async def handle_product_question(self, customer_id: str, issue: str) -> Dict[str, Any]:
+        """Handle product questions by delegating to Product Expert"""
+        
+        product_request = {
+            "query": issue,
+            "type": "general"
+        }
+        
+        product_response = await self.delegate_to_agent("product_expert", product_request)
+        
+        customer_response = self.llm.format_support_response(
+            technical_response=product_response,
+            customer_issue=issue
+        )
+        
+        return {
+            "response": customer_response,
+            "source": self.name,
+            "delegated_to": "product_expert"
+        }
+
+class MultiAgentOrchestrator:
+    """
+    Orchestrator that manages the multi-agent system
+    """
+    def __init__(self):
+        self.agents = {}
+        self.setup_agents()
+        self.connect_agents()
+    
+    def setup_agents(self):
+        """Initialize all agents"""
+        self.agents["sales"] = VirtualSalesAgent()
+        self.agents["product_expert"] = ProductExpertAgent()
+        self.agents["fulfillment"] = SalesFulfillmentAgent()
+        self.agents["support"] = CustomerSupportAgent()
+        
+        print("🤖 All agents initialized successfully!")
+    
+    def connect_agents(self):
+        """Connect agents to each other for collaboration"""
+        # Sales agent connections
+        self.agents["sales"].register_agent("product_expert", self.agents["product_expert"])
+        self.agents["sales"].register_agent("fulfillment", self.agents["fulfillment"])
+        
+        # Support agent connections
+        self.agents["support"].register_agent("product_expert", self.agents["product_expert"])
+        self.agents["support"].register_agent("fulfillment", self.agents["fulfillment"])
+        
+        print("🔗 Agent connections established!")
+    
+    async def route_request(self, request: Dict[str, Any]) -> Dict[str, Any]:
+        """Route incoming request to appropriate agent"""
+        request_type = request.get("type", "")
+        
+        if request_type == "sales":
+            return await self.agents["sales"].process_request(request)
+        elif request_type == "support":
+            return await self.agents["support"].process_request(request)
+        elif request_type == "product":
+            return await self.agents["product_expert"].process_request(request)
+        elif request_type == "order":
+            return await self.agents["fulfillment"].process_request(request)
+        else:
+            return {"error": "Unknown request type"}
+
+# Example usage
+async def main():
+    # Initialize multi-agent system
+    orchestrator = MultiAgentOrchestrator()
+    
+    # Example customer interactions
+    
+    # Customer asks about a product
+    sales_request = {
+        "type": "sales",
+        "customer_id": "CUST001",
+        "message": "أريد معرفة تفاصيل عن أجهزة اللابتوب المتاحة"
+    }
+    
+    sales_response = await orchestrator.route_request(sales_request)
+    print("Sales Response:", sales_response)
+    
+    # Customer places an order
+    order_request = {
+        "type": "sales", 
+        "customer_id": "CUST001",
+        "message": "أريد شراء لابتوب Dell XPS 13 مع توصيل سريع"
+    }
+    
+    order_response = await orchestrator.route_request(order_request)
+    print("Order Response:", order_response)
+    
+    # Customer asks for order status
+    support_request = {
+        "type": "support",
+        "customer_id": "CUST001", 
+        "issue": "أريد معرفة حالة طلبي رقم ORD12345"
+    }
+    
+    support_response = await orchestrator.route_request(support_request)
+    print("Support Response:", support_response)
+
+# Run the example
+if __name__ == "__main__":
+    asyncio.run(main())
+                </pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">🌟 فوائد Multi-Agent Pattern</h2>
+      <div class="card-content arabic-text">
+        <div class="agent-benefits">
+          <h3>🚀 المزايا الرئيسية:</h3>
+          <ul>
+            <li>🎯 <strong>التخصص العميق:</strong> كل Agent خبير في مجاله المحدد</li>
+            <li>🔄 <strong>إعادة الاستخدام:</strong> نفس الـ Agent يشارك في أنظمة مختلفة</li>
+            <li>🤝 <strong>التعاون الفعال:</strong> الـ Agents تتشارك الخبرات والموارد</li>
+            <li>⚡ <strong>الأداء المحسن:</strong> تقسيم العمل يحسن السرعة والكفاءة</li>
+            <li>🛠️ <strong>سهولة الصيانة:</strong> تحديث Agent واحد بدلاً من النظام كله</li>
+            <li>📈 <strong>قابلية التوسع:</strong> إضافة Agents جديدة حسب الحاجة</li>
+            <li>🔧 <strong>المرونة:</strong> تغيير أو استبدال Agents بسهولة</li>
+            <li>💰 <strong>توفير التكلفة:</strong> استخدام Best-of-breed agents جاهزة</li>
+          </ul>
+        </div>
+
+        <div class="system-architecture">
+          <h3>🏗️ هيكل النظام المرن</h3>
+          <div class="architecture-diagram">
+            <div class="agent-layer">
+              <strong>👤 طبقة التفاعل مع المستخدم</strong>
+              <p>Sales Agent | Support Agent</p>
+            </div>
+            <div class="connections">
+              <div class="connection-line"></div>
+              <div class="connection-line"></div>
+              <div class="connection-line"></div>
+            </div>
+            <div class="agent-layer">
+              <strong>🧠 طبقة الخدمات المتخصصة</strong>
+              <p>Product Expert | Fulfillment Agent</p>
+            </div>
+            <div class="connections">
+              <div class="connection-line"></div>
+              <div class="connection-line"></div>
+            </div>
+            <div class="agent-layer">
+              <strong>🗄️ طبقة البيانات والأنظمة</strong>
+              <p>Database | APIs | External Services</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="important-note">
+          <strong>الاستخدامات الشائعة:</strong> التجارة الإلكترونية، خدمة العملاء، إدارة المشاريع، الرعاية الصحية،
+          التصنيع الذكي، والأنظمة المصرفية.
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">🔧 نصائح للتطبيق الناجح</h2>
+      <div class="card-content arabic-text">
+        <div class="important-note">
+          <strong>تحديد المسؤوليات بوضوح:</strong> لازم كل Agent يكون له دور محدد وواضح علشان ما يحصلش تداخل أو تضارب.
+        </div>
+
+        <p><strong>🔗 تصميم واجهات التواصل:</strong> حدد بوضوح إزاي الـ Agents هتتواصل مع بعض وتتبادل المعلومات.</p>
+
+        <br>
+
+        <p><strong>📊 مراقبة الأداء:</strong> راقب أداء كل Agent منفرد وأداء النظام ككل.</p>
+
+        <br>
+
+        <p><strong>🔄 إدارة فشل الـ Agents:</strong> حط استراتيجية للتعامل مع فشل أي Agent في النظام.</p>
+
+        <br>
+
+        <p><strong>🎯 التوازن في التوزيع:</strong> وزع المهام بطريقة متوازنة على الـ Agents المختلفة.</p>
+
+        <br>
+
+        <p><strong>📝 توثيق التفاعلات:</strong> وثق كل التفاعلات بين الـ Agents لسهولة الصيانة والتطوير.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">✅ الخلاصة</h2>
+      <div class="card-content arabic-text">
+        <p>Multi-Agent Pattern هو أقوى الأنماط لبناء أنظمة ذكية معقدة قادرة على التعامل مع سيناريوهات العمل الحقيقية في
+          الشركات الكبيرة.</p>
+
+        <br>
+
+        <p><strong>الفكرة الأساسية:</strong> زي ما فريق العمل البشري بيتعاون لإنجاز مشروع كبير، الـ AI Agents تقدر
+          تتعاون وتتكامل لتحقيق أهداف معقدة.</p>
+
+        <div class="workflow-diagram">
+          <h3>🎯 القوة في التعاون:</h3>
+          <div class="workflow-steps">
+            <div class="workflow-step">
+              <strong>تخصص</strong>
+              <p>كل Agent خبير في مجاله</p>
+            </div>
+            <div class="arrow-flow">+</div>
+            <div class="workflow-step">
+              <strong>تعاون</strong>
+              <p>تبادل الخبرات والموارد</p>
+            </div>
+            <div class="arrow-flow">=</div>
+            <div class="workflow-step">
+              <strong>نجاح</strong>
+              <p>حلول شاملة للمشاكل المعقدة</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="important-note">
+          <strong>المفتاح للنجاح:</strong> Agents متخصصة + تواصل فعال + تنسيق ذكي + أهداف واضحة = نظام قادر على أي تحدي!
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

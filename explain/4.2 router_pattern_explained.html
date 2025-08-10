@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شرح Router Pattern في Agentic AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .card-title {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .card-content {
+            line-height: 1.8;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .code-card {
+            background: #2c3e50;
+            color: #ecf0f1;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .code-card pre {
+            overflow-x: auto;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .process-step {
+            background: #f8f9fa;
+            border-left: 5px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .important-note {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .important-note::before {
+            content: "💡 ";
+            font-size: 1.5rem;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .example-item {
+            background: #e8f5e8;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #27ae60;
+        }
+
+        .arabic-text {
+            direction: rtl;
+            text-align: right;
+        }
+
+        .ltr-text {
+            direction: ltr;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 شرح Router Pattern في Agentic AI</h1>
+            <p>فهم نمط التوجيه في الذكاء الاصطناعي التفاعلي بطريقة بسيطة ومفصلة</p>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">🎯 إيه هو Router Pattern؟</h2>
+            <div class="card-content arabic-text">
+                <p>تخيل إنك واقف في محطة قطار كبيرة وعندك خيارات كتير للسفر. Router Pattern في Agentic AI هو زي الموظف اللي بيساعدك تختار أنسب قطار حسب وجهتك.</p>
+                
+                <br>
+                
+                <p>النمط ده بيخلي الـ <span class="highlight">LLM (اللغة الذكية)</span> يختار من بين مجموعة خيارات مختلفة أو "طرق" متاحة. بعد كده الـ Agent (الوكيل الذكي) بينفذ الطريق اللي اتختار.</p>
+                
+                <br>
+                
+                <p>في الأساس، ده زي <span class="highlight">if-else statement</span> بس الـ LLM هو اللي بياخد القرار مش المبرمج!</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">⚙️ إزاي بيشتغل Router Pattern؟</h2>
+            <div class="card-content arabic-text">
+                <p>الـ Agent عنده مجموعة من الأفعال أو الطرق المختلفة في "المخزن" بتاعه. الطرق دي ممكن تكون:</p>
+                
+                <div class="examples-grid">
+                    <div class="example-item">
+                        <strong>🗃️ مصادر بيانات مختلفة</strong>
+                        <p>زي قواعد البيانات، APIs، ملفات</p>
+                    </div>
+                    <div class="example-item">
+                        <strong>🔧 إجراءات مختلفة</strong>
+                        <p>زي البحث، التحليل، المعالجة</p>
+                    </div>
+                    <div class="example-item">
+                        <strong>🔍 تقنيات استرجاع مختلفة</strong>
+                        <p>زي البحث النصي، البحث الدلالي</p>
+                    </div>
+                    <div class="example-item">
+                        <strong>🔗 تكاملات نظم مختلفة</strong>
+                        <p>زي الربط مع أنظمة خارجية</p>
+                    </div>
+                </div>
+
+                <div class="important-note">
+                    <strong>نقطة مهمة جداً:</strong> كل action ليه "بروفايل" أو وصف بيوضح قدراته. الوصف ده مهم جداً علشان الـ LLM يقدر ياخد قرار صح!
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">🎬 سيناريو Router Pattern خطوة بخطوة</h2>
+            <div class="card-content arabic-text">
+                <p>تعال نشوف إزاي النمط ده بيشتغل في الواقع:</p>
+
+                <div class="process-step">
+                    <strong>الخطوة الأولى:</strong> إعداد Routing Agent مع 3 actions مختلفة
+                </div>
+
+                <div class="process-step">
+                    <strong>الخطوة التانية:</strong> كل action ليه بروفايل يوضح قدراته وإمكانياته
+                </div>
+
+                <div class="process-step">
+                    <strong>الخطوة التالتة:</strong> العميل بيبعت الهدف أو الـ prompt للـ routing agent
+                </div>
+
+                <div class="process-step">
+                    <strong>الخطوة الرابعة:</strong> الـ routing agent بيبعت الهدف مع كل الـ actions والبروفايلات للـ LLM
+                </div>
+
+                <div class="process-step">
+                    <strong>الخطوة الخامسة:</strong> الـ LLM بيختار أفضل action ويرد على الـ agent
+                </div>
+
+                <div class="process-step">
+                    <strong>الخطوة الأخيرة:</strong> الـ agent بينفذ الـ action اللي اتختار
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">💻 مثال بالكود</h2>
+            <div class="card-content arabic-text">
+                <p>ده مثال بسيط على Router Pattern:</p>
+            </div>
+            
+            <div class="code-card">
+                <pre>
+class RouterAgent:
+    def __init__(self):
+        self.actions = {
+            "search_database": {
+                "description": "Search in company database for employee information",
+                "function": self.search_db
+            },
+            "web_search": {
+                "description": "Search the internet for general information",
+                "function": self.web_search
+            },
+            "generate_report": {
+                "description": "Generate analytical reports from data",
+                "function": self.generate_report
+            }
+        }
+    
+    def route_request(self, user_prompt):
+        # Send prompt + actions to LLM
+        llm_response = self.llm.choose_action(
+            prompt=user_prompt,
+            available_actions=self.actions
+        )
+        
+        # Execute chosen action
+        chosen_action = llm_response.selected_action
+        result = self.actions[chosen_action]["function"](user_prompt)
+        
+        return result
+    
+    def search_db(self, query):
+        # Implementation for database search
+        pass
+    
+    def web_search(self, query):
+        # Implementation for web search
+        pass
+    
+    def generate_report(self, query):
+        # Implementation for report generation
+        pass
+
+# Usage example
+agent = RouterAgent()
+result = agent.route_request("Find information about employee John Smith")
+# LLM will choose "search_database" as the best action
+                </pre>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">🔑 نصائح مهمة للنجاح</h2>
+            <div class="card-content arabic-text">
+                <div class="important-note">
+                    <strong>الوصف الدقيق هو المفتاح:</strong> لازم تكتب وصف مفصل وواضح لكل action علشان الـ LLM يقدر ياخد قرار صح.
+                </div>
+
+                <p><strong>🎯 اختيار أفضل تطابق:</strong> الـ Agent بيختار أحسن action بناءً على الهدف أو الـ prompt اللي جاله.</p>
+                
+                <br>
+                
+                <p><strong>🔧 مسؤولية المنسق:</strong> الـ orchestrator في الـ Agent هو المسؤول عن تنفيذ الطريق أو الـ action اللي اختاره الـ LLM.</p>
+                
+                <br>
+                
+                <p><strong>📝 جودة الوصف:</strong> أهم حاجة إن الوصف يبقى فيه التفاصيل الصحيحة علشان الـ LLM يقدر ياخد قرارات مدروسة.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">🏗️ مثال تطبيقي: نظام خدمة العملاء</h2>
+            <div class="card-content arabic-text">
+                <p>تخيل إنك بتبني نظام ذكي لخدمة العملاء، Router Pattern هيبقى مفيد جداً:</p>
+            </div>
+            
+            <div class="code-card">
+                <pre>
+class CustomerServiceRouter:
+    def __init__(self):
+        self.routes = {
+            "billing_inquiry": {
+                "description": "Handle questions about bills, payments, and charges",
+                "keywords": ["bill", "payment", "charge", "invoice"],
+                "handler": self.handle_billing
+            },
+            "technical_support": {
+                "description": "Resolve technical issues and troubleshooting",
+                "keywords": ["error", "not working", "technical", "bug"],
+                "handler": self.handle_technical
+            },
+            "general_info": {
+                "description": "Provide general information about services",
+                "keywords": ["info", "about", "service", "general"],
+                "handler": self.handle_general
+            }
+        }
+    
+    def process_customer_request(self, customer_message):
+        # LLM analyzes the message and chooses best route
+        selected_route = self.llm.analyze_and_route(
+            message=customer_message,
+            available_routes=self.routes
+        )
+        
+        # Execute the selected handler
+        return self.routes[selected_route]["handler"](customer_message)
+
+# Example usage:
+# Customer: "My internet is not working"
+# Router will choose "technical_support" route
+                </pre>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">✅ الخلاصة</h2>
+            <div class="card-content arabic-text">
+                <p>Router Pattern في Agentic AI هو أداة قوية جداً بتخلي الأنظمة الذكية تاخد قرارات تلقائية وتختار أفضل طريق للتعامل مع أي طلب.</p>
+                
+                <br>
+                
+                <p><strong>فوائد النمط ده:</strong></p>
+                <ul style="margin: 15px 0; padding-right: 20px;">
+                    <li>🚀 مرونة في التعامل مع طلبات مختلفة</li>
+                    <li>🎯 اختيار تلقائي للحل الأمثل</li>
+                    <li>🔧 سهولة إضافة actions جديدة</li>
+                    <li>📊 تحسين الأداء والدقة</li>
+                </ul>
+                
+                <div class="important-note">
+                    <strong>المفتاح للنجاح:</strong> اكتب وصف دقيق وواضح لكل action، ده هيخلي الـ LLM ياخد قرارات أفضل!
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
